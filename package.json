@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "sh bin/init.sh && npm run build && node dist/main",
+    "build": "tsc",
+    "poststart": "node -e `console.log('hey')`"
   },
   "keywords": [],
   "author": "",

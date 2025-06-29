@@ -1,0 +1,6 @@
+#!/bin/bash
+source .env
+
+if [[ -n "$DATABASE_USERNAME" && -n "$DATABASE_PASSWORD" && -n "$DATABASE_NAME" ]]; then
+  mysql -u"$DATABASE_USERNAME" -p"$DATABASE_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS \`$DATABASE_NAME\`"
+fi
