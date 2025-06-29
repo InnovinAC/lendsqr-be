@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    // "moduleDetection": "auto",                        /* Control what method is used to detect module-format JS files. */
+
+    /* Modules */
+    "module": "commonjs",                                /* Specify what module code is generated. */
+     "rootDir": "./src",                                  /* Specify the root folder within your source files. */
+
+     "outDir": "./dist",
+    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
+    // "preserveSymlinks": true,                         /* Disable resolving symlinks to their realpath. This correlates to the same flag in node. */
+    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
+
+    /* Type Checking */
+    "strict": true,
+    /* Completeness */
+    // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
+    "skipLibCheck": true,                             /* Skip type checking all .d.ts files. */
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.js",
+      "src/**/*.d.ts",
+      "migrations/**/*.ts",
+      "migrations/**/*.js"
+    ],
+    "exclude": ["node_modules", "dist"]
+  }
+}
