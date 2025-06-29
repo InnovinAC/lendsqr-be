@@ -1,15 +1,15 @@
-import commonConfig from "@/config/common.config";
-import knexConfig from "@/../knexfile"
-import Knex from "knex";
+import commonConfig from "../../config/common.config";
+import knexConfig from "../../../knexfile"
+import {type Knex, knex} from "knex";
 
 // Singleton pattern
 class Database {
     static instance: Database;
-    private readonly db: Knex.Knex;
+    private readonly db: Knex;
 
     constructor() {
         const config = knexConfig[commonConfig.environment];
-        this.db = Knex(config);
+        this.db = knex(config);
     }
 
     /**
@@ -27,9 +27,8 @@ class Database {
      * Get db connection
      * @returns Knex
      */
-    public getConnection(): Knex.Knex {
+    public getConnection(): Knex {
         return this.db;
     }
 }
-
 export default Database;

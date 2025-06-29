@@ -1,3 +1,3 @@
-export {default as Wallet} from "@/wallet.model";
-export {default as User} from "@/user.model";
-export {default as Transaction} from "@/transaction.model";
+export {Wallet} from "@/models/wallet.model";
+export {User} from "@/models/user.model";
+export {Transaction} from "@/models/transaction.model";

@@ -1,12 +1,9 @@
 import {Knex} from 'knex';
-import dotenv from 'dotenv';
-
 // Knex cli is not aware of typescript paths "@"
 import commonConfig from "./src/config/common.config";
 
 
-// Load environment variables
-dotenv.config();
+
 
 const subConfig = {
     client: 'mysql2',
@@ -29,9 +26,23 @@ const config: {[key: string]: Knex.Config} = {
         {
             ...subConfig,
             log: {
-                warn: console.warn,
-                error: console.error,
-                debug: console.log,
+                warn: (console.warn),
+                error: (console.error),
+                debug: (console.log),
+            },
+        },
+    // Add test for jest
+    test:
+        {
+            ...subConfig,
+            connection: {
+                ...subConfig.connection,
+                database: commonConfig.database.TEST_DATABASE_NAME,
+            },
+            log: {
+                warn: (console.warn),
+                error: (console.error),
+                debug: (console.log),
             },
         },
     production: {
