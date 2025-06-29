@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es2016",
     "module": "commonjs",
-    "rootDir": "./src",
+    "rootDir": "./",
     "baseUrl": "./",
     "outDir": "./dist",
     "esModuleInterop": true,
@@ -19,8 +19,11 @@
     "src/**/*.ts",
     "src/**/*.js",
     "src/**/*.d.ts",
-    "migrations/**/*.ts",
-    "migrations/**/*.js"
+    "knexfile.ts",
+    "db/migrations/**/*.ts",
+    "db/migrations/**/*.js",
+    "db/seeds/**/*.ts",
+    "db/seeds/**/*.js"
   ],
   "exclude": [
     "node_modules",

@@ -8,11 +8,8 @@ const config = Object.freeze({
         DATABASE_USERNAME: process.env.DATABASE_USERNAME,
         DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
         DATABASE_NAME: process.env.DATABASE_NAME,
-
-
     },
-
-    logging: false,
+    environment: process.env.NODE_ENV,
 })
 
 export default config;
