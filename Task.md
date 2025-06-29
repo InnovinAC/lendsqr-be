@@ -1,15 +1,3 @@
-Test for backend engineering candidates
-
-
-# Background
-
-At Lendsqr, many of our lenders use our mobile apps to reach over half a million customers. At this scale, we use NodeJS with TypeScript as its backend software development stack which allows us to rapidly ideate and release features and functionality.
-
-To prepare for you as a possible backend engineer at Lendsqr, we would require that you create an application using NodeJS with TypeScript. This test will allow us to assess your strengths and weaknesses.
-
-**This assessment is not for entry level engineers. At the minimum, you must have solid proficiencies in TypeScript, NodeJS, and MySQL. PLEASE DO NOT ATTEMPT THIS ASSESSMENT IF YOU ARE NOT CONFIDENT OF YOUR SKILLS TO DELIVER AS IT WOULD BE A WASTE OF YOUR TIME.**
-
-
 # Assessment
 
 Demo Credit is a mobile lending app that requires wallet functionality. This is needed as borrowers need a wallet to receive the loans they have been granted and also send the money for repayments.
