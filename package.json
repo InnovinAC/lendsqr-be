@@ -6,8 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "sh bin/init.sh && npm run build && node dist/main",
-    "build": "tsc",
-    "poststart": "node -e `console.log('hey')`"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
