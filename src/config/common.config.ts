@@ -11,6 +11,10 @@ const config = Object.freeze({
         TEST_DATABASE_NAME: process.env.TEST_DATABASE_NAME || 'lendsqr-be-test',
     },
     environment: process.env.NODE_ENV || 'development',
+    server: {
+        port: process.env.PORT || 3000,
+        baseApiUrl: '/api/v1'
+    }
 })
 
 export default config;

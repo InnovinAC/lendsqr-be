@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "sh bin/test.sh && jest",
-    "start": "sh bin/init.sh && npm run build && node dist/main",
+    "start": "sh bin/init.sh && npm run test && npm run build && node dist/src/main",
     "build": "tsc",
     "migrate": "knex migrate:latest",
     "migrate:make": "knex migrate:make",
@@ -16,13 +16,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^17.0.0",
     "express": "^5.1.0",
     "knex": "^3.1.0",
-    "mysql2": "^3.14.1"
+    "module-alias": "^2.2.3",
+    "mysql2": "^3.14.1",
+    "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
     "@jest/globals": "^30.0.3",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.0.7",
@@ -30,5 +34,8 @@
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.0.0"
+  },
+  "_moduleAliases": {
+    "@": "dist/src"
   }
 }
