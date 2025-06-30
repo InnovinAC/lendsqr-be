@@ -16,14 +16,14 @@ class App {
     /**
      * Responsible for initializing the entire app
      */
-    async initialize() {
+    private async initialize() {
         await this.initDatabase();
         this.initRoutes();
         this.listen(commonConfig.server.port);
         this.setupGracefulShutdown();
     }
 
-    listen(port: string | number) {
+    private listen(port: string | number) {
         this._app.listen(port, () => {
             console.log(`Listening on port ${port}`);
         });
@@ -33,7 +33,7 @@ class App {
      * Responsible for initializing all defined app routes
      * and ensuring they have the same router instance
      */
-    initRoutes() {
+    private initRoutes() {
         const router = Router();
         this._app.use(commonConfig.server.baseApiUrl, router);
         allRoutes.forEach(route => {
@@ -47,7 +47,7 @@ class App {
      * and testing the database connection.
      * This also runs migrations if not in test environment.
      */
-    async initDatabase(): Promise<void> {
+    private async initDatabase(): Promise<void> {
         try {
             console.log('Initializing database connection...');
 
