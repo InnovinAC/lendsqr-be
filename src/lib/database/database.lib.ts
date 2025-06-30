@@ -1,6 +1,7 @@
 import commonConfig from "../../config/common.config";
 import knexConfig from "../../../knexfile"
 import {type Knex, knex} from "knex";
+import logger from "@/utils/logger.utils";
 
 // Singleton pattern
 class Database {
@@ -69,9 +70,9 @@ class Database {
         try {
             await this.db.destroy();
             this.isConnected = false;
-            console.log('Database connection closed');
+            logger.info('Database connection closed');
         } catch (error) {
-            console.error('Error closing database connection:', error);
+            logger.error('Error closing database connection:', error);
             throw error;
         }
     }

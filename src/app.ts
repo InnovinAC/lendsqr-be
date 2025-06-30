@@ -2,6 +2,7 @@ import {Express, Router} from "express";
 import commonConfig from "@/config/common.config";
 import {allRoutes} from "@/routes";
 import Database from "@/lib/database/database.lib";
+import logger from "@/utils/logger.utils";
 
 class App {
     private readonly _app: Express;
@@ -25,7 +26,7 @@ class App {
 
     private listen(port: string | number) {
         this._app.listen(port, () => {
-            console.log(`Listening on port ${port}`);
+            logger.info(`Listening on port ${port}`);
         });
     }
 
@@ -37,7 +38,7 @@ class App {
         const router = Router();
         this._app.use(commonConfig.server.baseApiUrl, router);
         allRoutes.forEach(route => {
-            console.log("Initializing route", route.name);
+            logger.info(`Initializing route ${route.name}`);
             new route(router, this._database!.getConnection()).initRoutes()
         })
     }
@@ -49,7 +50,7 @@ class App {
      */
     private async initDatabase(): Promise<void> {
         try {
-            console.log('Initializing database connection...');
+            logger.info('Initializing database connection...');
 
             this._database = Database.getInstance();
             await this._database.testConnection()
@@ -57,13 +58,13 @@ class App {
 
             // Run migrations
             if (commonConfig.environment !== 'test') {
-                console.log('Running database migrations...');
+                logger.info('Running database migrations...');
                 await this._database.runMigrations();
             }
 
-            console.log('Database initialized successfully');
+            logger.info('Database initialized successfully');
         } catch (error) {
-            console.error('Database initialization failed:', error);
+            logger.error('Database initialization failed:', error);
             throw error;
         }
     }
@@ -75,19 +76,19 @@ class App {
      */
     private setupGracefulShutdown(): void {
         const gracefulShutdown = async (signal: string) => {
-            console.log(`Received ${signal}, shutting down gracefully...`);
+            logger.info(`Received ${signal}, shutting down gracefully...`);
 
             try {
                 // Close database connections
                 if (this._database) {
                     await this._database.close();
-                    console.log('Database connections closed');
+                    logger.info('Database connections closed');
                 }
 
-                console.log('Graceful shutdown completed');
+                logger.info('Graceful shutdown completed');
                 process.exit(0);
             } catch (error) {
-                console.error('Error during shutdown:', error);
+                logger.error('Error during shutdown:', error);
                 process.exit(1);
             }
         };
