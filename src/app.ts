@@ -1,8 +1,9 @@
-import {Express, Router} from "express";
+import {Express, NextFunction, Router, Request, Response} from "express";
 import commonConfig from "@/config/common.config";
 import {allRoutes} from "@/routes";
 import Database from "@/lib/database/database.lib";
 import logger from "@/utils/logger.utils";
+import ResponseHandler from "@/lib/response-handler.lib";
 
 class App {
     private readonly _app: Express;
@@ -40,6 +41,11 @@ class App {
         allRoutes.forEach(route => {
             logger.info(`Initializing route ${route.name}`);
             new route(router).initRoutes()
+        })
+        // Global error handler
+        router.use((err: Error, _: Request, res: Response) => {
+            logger.error(`Global error - ${err}`)
+             ResponseHandler.sendError(res, (err as any).message, (err as any).status || 500)
         })
     }
 
