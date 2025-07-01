@@ -1,8 +1,7 @@
 import {Router} from "express";
 
 abstract class Controller {
-    public router: Router;
-    protected constructor(router: Router) {
+    protected constructor(public router: Router) {
         this.router = router;
         this.initMiddleware();
         this.initServices();

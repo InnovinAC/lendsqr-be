@@ -1,12 +1,13 @@
 import Controller from "@/lib/controller/controller.lib";
-import {Knex} from "knex";
-import {Router, Request, Response, NextFunction} from "express";
+import {NextFunction, Request, Response, Router} from "express";
+import ResponseHandler from "@/lib/response-handler.lib";
 
-class PublicController  extends Controller {
+class PublicController extends Controller {
     constructor(router: Router) {
         super(router);
 
     }
+
     initMiddleware(): void {
     }
 
@@ -18,9 +19,11 @@ class PublicController  extends Controller {
     }
 
     private getHome() {
-        this.router.get("/home", (req: Request, res: Response, next: NextFunction) => {
-            res.send("GET /home");
+        this.router.get("/home", (req: Request, res: Response) => {
+             ResponseHandler.sendSuccess(res, "Testing", 200);
         });
     }
+
 }
+
 export default PublicController;

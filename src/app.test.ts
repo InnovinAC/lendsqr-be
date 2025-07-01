@@ -91,7 +91,7 @@ describe('App', () => {
         expect(mockExpress.use).toHaveBeenCalledWith('/api/v1', mockRouter);
         // ensure correct number of routes
         expect(mockRoute).toHaveBeenCalledTimes(3);
-        expect(mockRoute).toHaveBeenCalledWith(mockRouter, expect.anything());
+        expect(mockRoute).toHaveBeenCalledWith(mockRouter);
         expect(mockRoute.mock.results[0].value.initRoutes).toBeDefined();
 
     });
