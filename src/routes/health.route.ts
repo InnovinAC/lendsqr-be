@@ -1,6 +1,5 @@
 import {RouteInterface} from "@/lib/route/route.interface";
 import {Router} from "express";
-import {Knex} from "knex";
 
 export class HealthRoutes implements RouteInterface {
     private _appRouter: Router;

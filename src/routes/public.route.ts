@@ -1,6 +1,5 @@
 import {RouteInterface} from "@/lib/route/route.interface";
 import {Router} from "express";
-import {Knex} from "knex";
 import PublicController from "@/controllers/public/public.controller";
 
 export class PublicRoute implements RouteInterface {

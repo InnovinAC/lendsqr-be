@@ -1,4 +1,3 @@
-import {Knex} from "knex";
 import {Router} from "express";
 
 abstract class Controller {
