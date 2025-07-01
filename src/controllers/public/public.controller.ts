@@ -1,6 +1,6 @@
 import Controller from "@/lib/controller/controller.lib";
 import {NextFunction, Request, Response, Router} from "express";
-import ResponseHandler from "@/lib/response-handler.lib";
+import ResponseHandler from "@/lib/api/response-handler.lib";
 import createHttpError from "http-errors";
 
 class PublicController extends Controller {

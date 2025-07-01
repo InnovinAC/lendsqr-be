@@ -3,7 +3,7 @@ import commonConfig from "@/config/common.config";
 import {allRoutes} from "@/routes";
 import Database from "@/lib/database/database.lib";
 import logger from "@/utils/logger.utils";
-import ResponseHandler from "@/lib/response-handler.lib";
+import ResponseHandler from "@/lib/api/response-handler.lib";
 
 class App {
     private readonly _app: Express;
