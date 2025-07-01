@@ -8,6 +8,5 @@ type RouteConstructor = new (router: Router) => RouteInterface;
 export const allRoutes: RouteConstructor[] = [
     HealthRoutes,
     PublicRoute
-
 ]
 
