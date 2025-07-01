@@ -39,7 +39,7 @@ class App {
         this._app.use(commonConfig.server.baseApiUrl, router);
         allRoutes.forEach(route => {
             logger.info(`Initializing route ${route.name}`);
-            new route(router, this._database!.getConnection()).initRoutes()
+            new route(router).initRoutes()
         })
     }
 

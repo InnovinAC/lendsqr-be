@@ -3,8 +3,8 @@ import {Knex} from "knex";
 import {Router, Request, Response, NextFunction} from "express";
 
 class PublicController  extends Controller {
-    constructor(db: Knex, router: Router) {
-        super(db, router);
+    constructor(router: Router) {
+        super(router);
 
     }
     initMiddleware(): void {

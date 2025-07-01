@@ -5,7 +5,7 @@ import {Knex} from "knex";
 export class HealthRoutes implements RouteInterface {
     private _appRouter: Router;
 
-    constructor(public appRouter: Router, db: Knex) {
+    constructor(public appRouter: Router) {
         this._appRouter = appRouter;
     }
 

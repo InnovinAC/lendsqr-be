@@ -20,6 +20,7 @@ class Database {
      **/
     public static getInstance() {
         if (!Database.instance) {
+            logger.info('creating database instance');
             Database.instance = new Database();
         }
         return Database.instance;

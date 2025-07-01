@@ -5,10 +5,10 @@ import PublicController from "@/controllers/public/public.controller";
 
 export class PublicRoute implements RouteInterface {
 
-    constructor(public appRouter: Router, private db: Knex) {}
+    constructor(public appRouter: Router) {}
 
     initRoutes(): void {
-        this.appRouter.use('/public', new PublicController(this.db, this.appRouter).router);
+        this.appRouter.use('/public', new PublicController(this.appRouter).router);
     }
 
 }

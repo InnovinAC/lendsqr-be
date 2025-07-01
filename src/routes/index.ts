@@ -4,7 +4,7 @@ import {Router} from "express";
 import {Knex} from "knex";
 import {PublicRoute} from "@/routes/public.route";
 
-type RouteConstructor = new (router: Router, db: Knex) => RouteInterface;
+type RouteConstructor = new (router: Router) => RouteInterface;
 
 export const allRoutes: RouteConstructor[] = [
     HealthRoutes,

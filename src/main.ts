@@ -2,6 +2,7 @@ import 'module-alias/register';
 import express from 'express';
 import cors from 'cors';
 import App from "@/app";
+import logger from "@/utils/logger.utils";
 
 async function bootstrap() {
     try {
@@ -11,7 +12,7 @@ async function bootstrap() {
         app.use(cors());
         new App(app);
     } catch (error) {
-        console.log(error);
+        logger.error(error);
         process.exit(1);
     }
 }
