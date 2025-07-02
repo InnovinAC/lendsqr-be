@@ -1,6 +1,6 @@
 import {RouteInterface} from "@/lib/route/route.interface";
 import {Router} from "express";
-import AuthenticationController from "@/controllers/public/authentication.controller";
+import AuthenticationController from "@/controllers/auth/authentication.controller";
 
 export class AuthRoute implements RouteInterface {
 

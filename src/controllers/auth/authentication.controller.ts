@@ -1,5 +1,5 @@
 import Controller from "@/lib/controller/controller.lib";
-import AuthenticationMiddleware from "@/middleware/authentication.middleware";
+import AuthenticationMiddleware from "@/middleware/authentication/authentication.middleware";
 import {NextFunction, Request, Response, Router} from "express";
 import RequestValidator from "@/lib/api/request-validator.lib";
 import authenticationSchema from "@/validators/authentication.validator";

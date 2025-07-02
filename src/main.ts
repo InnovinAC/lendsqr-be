@@ -10,7 +10,7 @@ async function bootstrap() {
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
         app.use(cors());
-        new App(app).app;
+        new App(app);
     } catch (error) {
         logger.error(error);
         process.exit(1);
