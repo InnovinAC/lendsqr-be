@@ -2,7 +2,6 @@ import JwtService from '@/services/jwt.service';
 import jwt from 'jsonwebtoken';
 import commonConfig from '@/config/common.config';
 
-// Mock the JWT library
 jest.mock('jsonwebtoken');
 const mockedJwt = jwt as jest.Mocked<typeof jwt>;
 

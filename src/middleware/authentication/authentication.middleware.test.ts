@@ -23,7 +23,7 @@ describe('AuthenticationMiddleware', () => {
     expect(next).toHaveBeenCalled();
   });
 
-  it('should call next with BadRequest error if email is not unique', async () => {
+  it('should call next with error if email is not unique', async () => {
     (UserService.getInstance as jest.Mock).mockReturnValue({
       isUniqueEmail: jest.fn().mockResolvedValue(false),
     });

@@ -11,14 +11,14 @@ jest.mock('@/lib/api/response-handler.lib');
 
 jest.mock('@/middleware/authentication/authentication.middleware', () => {
   return jest.fn().mockImplementation(() => ({
-    checkExistingEmail: (req: any, res: any, next: any) => next(),
+    checkExistingEmail: (_req: any, _res: any, next: any) => next(),
   }));
 });
 
 jest.mock('@/lib/api/request-validator.lib', () => ({
   __esModule: true,
   default: {
-    validate: () => (req: any, res: any, next: any) => next(),
+    validate: () => (_req: any, _res: any, next: any) => next(),
   },
 }));
 
