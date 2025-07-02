@@ -43,10 +43,11 @@ class App {
             new route(router).initRoutes()
         })
         // Global error handler
-        router.use((err: Error, _: Request, res: Response) => {
-            logger.error(`Global error - ${err}`)
-             ResponseHandler.sendError(res, (err as any).message, (err as any).status || 500)
-        })
+        router.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+            logger.error(`Global error - ${err}`);
+            ResponseHandler.sendError(res, (err as any).message, (err as any).status || 500);
+        });
+
     }
 
     /**
