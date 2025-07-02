@@ -2,9 +2,6 @@ import {Knex} from 'knex';
 // Knex cli is not aware of typescript paths "@"
 import commonConfig from "./src/config/common.config";
 
-
-
-
 const subConfig = {
     client: 'mysql2',
     connection: {
