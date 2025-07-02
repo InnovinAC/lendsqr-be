@@ -1,11 +1,11 @@
 import {Knex} from "knex";
 import Database from "@/lib/database/database.lib";
 
+// Singleton
 class Service {
     protected db: Knex;
     private static instances: Map<any, any> = new Map();
     constructor() {
-        console.log(Database.getInstance())
         this.db = Database.getInstance().getConnection();
     }
 
@@ -14,6 +14,11 @@ class Service {
             Service.instances.set(this, new this());
         }
         return Service.instances.get(this);
+    }
+
+    protected async getUUID(): Promise<string> {
+        const uuidResult = await this.db.raw('SELECT UUID() AS id');
+        return uuidResult[0][0].id;
     }
 }
 

@@ -6,8 +6,8 @@ class AuthenticationMiddleware {
   /**
    * Check if email is unique (for registration)
    */
-  public checkExistingEmail = (req: Request, res: Response, next: NextFunction) => {
-    const isNewUser = UserService.getInstance().isUniqueEmail(req.body.email);
+  public checkExistingEmail = async (req: Request, res: Response, next: NextFunction) => {
+    const isNewUser = await UserService.getInstance().isUniqueEmail(req.body.email);
     if (!isNewUser) {
       // I deliberately did not send a response saying "User already exists" or similar
       // because that way someone can tell that a user is signed up by calling

@@ -16,6 +16,9 @@ export interface AppConfig {
         port: string | number;
         baseApiUrl: string;
     };
+    jwt: {
+        secret: string;
+    };
     logging?: boolean;
 }
 
@@ -32,6 +35,9 @@ const config: AppConfig = Object.freeze({
     server: {
         port: process.env.PORT || 3000,
         baseApiUrl: '/api/v1'
+    },
+    jwt: {
+        secret: process.env.JWT_SECRET || 'secret',
     },
     logging: false,
 });
