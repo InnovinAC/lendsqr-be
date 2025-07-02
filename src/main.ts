@@ -1,9 +1,8 @@
 import 'module-alias/register';
-import express, {NextFunction, Request, Response} from 'express';
+import express from 'express';
 import cors from 'cors';
 import App from "@/app";
 import logger from "@/utils/logger.utils";
-import ResponseHandler from "@/lib/api/response-handler.lib";
 
 async function bootstrap() {
     try {
