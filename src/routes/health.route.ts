@@ -1,7 +1,7 @@
 import {RouteInterface} from "@/lib/route/route.interface";
 import {Router} from "express";
 
-export class HealthRoutes implements RouteInterface {
+class HealthRoute implements RouteInterface {
     private _appRouter: Router;
 
     constructor(public appRouter: Router) {
@@ -15,3 +15,4 @@ export class HealthRoutes implements RouteInterface {
     }
 
 }
+export default HealthRoute
