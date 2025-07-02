@@ -6,15 +6,27 @@ import authenticationSchema from "@/validators/authentication.validator";
 import UserService from "@/services/user.service";
 import ResponseHandler from "@/lib/api/response-handler.lib";
 import createError from "http-errors";
+import {rateLimit, RateLimitRequestHandler} from 'express-rate-limit'
 
 class AuthenticationController extends Controller {
     private authenticationMiddleware!: AuthenticationMiddleware;
+    private rateLimiter!: RateLimitRequestHandler;
     constructor(router: Router) {
         super(router);
+        this.setControllerMiddleware(this.rateLimiter)
     }
 
     initMiddleware(): void {
         this.authenticationMiddleware = new AuthenticationMiddleware();
+        this.rateLimiter =  rateLimit({
+            windowMs: 1000 * 60 * 5, // 5 mins,
+            limit: 10,
+            legacyHeaders: false,
+            handler(_req: Request, _res: Response, next: NextFunction): void {
+                next(createError.TooManyRequests("Too many requests. Try again later."));
+            }
+        })
+
     }
 
     initRoutes(): void {
