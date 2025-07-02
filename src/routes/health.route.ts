@@ -9,7 +9,7 @@ export class HealthRoutes implements RouteInterface {
     }
 
     initRoutes(): void {
-        this._appRouter.use('/health', (req, res) => {
+        this._appRouter.use('/health', (_req, res) => {
             res.status(200).send('OK');
         });
     }

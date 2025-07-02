@@ -12,17 +12,19 @@ class RequestValidator {
 
             try {
                 schema.parse(data);
-                next();
+                return next();
             } catch (error) {
                 if (error instanceof z.ZodError) {
-                    // Extract error messages from Zod errors
                     const message = error.errors
-                        .map((err) => `${err.path.join('.')}: ${err.message}`)
-                        .join(', ');
+                        .map((err) => {
+                            const path = err.path.length > 0 ? err.path.join('.') : property;
+                            return `${path}: ${err.message}`;
+                        })
+                        .join('; ');
 
-                    next(createError.UnprocessableEntity(message));
+                    return next(createError.UnprocessableEntity(message));
                 } else {
-                    next(createError.InternalServerError('Validation error'));
+                    return next(createError.InternalServerError('Validation error'));
                 }
             }
         }

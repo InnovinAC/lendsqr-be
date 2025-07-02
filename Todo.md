@@ -6,3 +6,4 @@
 5. Global error handling - I will make use of http-errors - done
 6. OOP structure for controller, middleware and services - done
 7. Make use of transactions especially when updating user wallet
+8. Organize test files into test folder

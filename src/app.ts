@@ -43,10 +43,22 @@ class App {
             new route(router).initRoutes()
         })
         // Global error handler
-        router.use((err: Error, _: Request, res: Response) => {
-            logger.error(`Global error - ${err}`)
-             ResponseHandler.sendError(res, (err as any).message, (err as any).status || 500)
-        })
+        router.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+            if (err.message.includes('ER_') || // MySQL error codes
+                err.message.includes('syntax error') || // SQL syntax errors
+                (err as any).code ||
+                err.name === 'QueryError' || // Knex query errors
+                err.stack?.includes('knex')) { // Any error from Knex stack
+
+                logger.error(`Database error - ${err.message}`, { stack: err.stack });
+                ResponseHandler.sendError(res, 'Internal server error', 500);
+                return;
+            }
+            logger.error(`Global error - ${err}`);
+            ResponseHandler.sendError(res, (err as any).message, (err as any).status || 500);
+            return;
+        });
+
     }
 
     /**
