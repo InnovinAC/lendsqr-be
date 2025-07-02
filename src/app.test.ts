@@ -1,5 +1,5 @@
 import express from 'express';
-import App from './app';
+import App from '@/app';
 import Database from '@/lib/database/database.lib';
 import * as allRoutesModule from '@/routes';
 import commonConfig from '@/config/common.config';
