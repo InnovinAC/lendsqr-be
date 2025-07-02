@@ -6,15 +6,24 @@ import authenticationSchema from "@/validators/authentication.validator";
 import UserService from "@/services/user.service";
 import ResponseHandler from "@/lib/api/response-handler.lib";
 import createError from "http-errors";
+import {rateLimit, RateLimitRequestHandler} from 'express-rate-limit'
 
 class AuthenticationController extends Controller {
     private authenticationMiddleware!: AuthenticationMiddleware;
+    private rateLimiter!: RateLimitRequestHandler;
     constructor(router: Router) {
         super(router);
     }
 
     initMiddleware(): void {
         this.authenticationMiddleware = new AuthenticationMiddleware();
+        this.rateLimiter =  rateLimit({
+            windowMs: 1000 * 60 * 5, // 5 mins,
+            limit: 10,
+            legacyHeaders: false,
+            message: "Too many requests, try again later.",
+        })
+
     }
 
     initRoutes(): void {
@@ -26,6 +35,7 @@ class AuthenticationController extends Controller {
     }
 
     public registerUser() {
+        this.router.post("/register", this.rateLimiter);
         this.router.post("/register", RequestValidator.validate(authenticationSchema.REGISTER));
         this.router.post("/register", this.authenticationMiddleware.checkExistingEmail);
         this.router.post("/register", async (req: Request, res: Response, next: NextFunction) => {
@@ -40,6 +50,7 @@ class AuthenticationController extends Controller {
     }
 
     public loginUser() {
+        this.router.post("/login", this.rateLimiter);
         this.router.post("/login", RequestValidator.validate(authenticationSchema.LOGIN));
         this.router.post("/login", async (req: Request, res: Response, next: NextFunction) => {
             try {
