@@ -19,6 +19,7 @@ class AuthenticationController extends Controller {
 
     initRoutes(): void {
         this.registerUser();
+        this.loginUser();
     }
 
     initServices(): void {
@@ -30,6 +31,19 @@ class AuthenticationController extends Controller {
         this.router.post("/register", async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const data = await UserService.getInstance().createUser(req.body);
+                ResponseHandler.sendSuccess(res, "Registration successful", 201, data);
+            } catch (e: any) {
+                next(createError(e))
+            }
+
+        });
+    }
+
+    public loginUser() {
+        this.router.post("/login", RequestValidator.validate(authenticationSchema.LOGIN));
+        this.router.post("/login", async (req: Request, res: Response, next: NextFunction) => {
+            try {
+                const data = await UserService.getInstance().loginUser(req.body);
                 ResponseHandler.sendSuccess(res, "Login successful", 200, data);
             } catch (e: any) {
                 next(createError(e))

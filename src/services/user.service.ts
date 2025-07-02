@@ -1,9 +1,10 @@
 import Service from "@/lib/service/service.lib";
 import {TableName} from "@/config/database.config";
-import {ICreateUser} from "@/interfaces/user.interface";
+import {ICreateUser, ILogin} from "@/interfaces/user.interface";
 import {User} from "@/models";
 import PasswordService from "@/services/password.service";
 import AuthService from "@/services/auth.service";
+import createError from "http-errors";
 
 class UserService extends Service {
     constructor() {
@@ -44,6 +45,18 @@ class UserService extends Service {
         });
 
         return AuthService.getInstance().authenticate(generatedId);
+    }
+
+    async loginUser(data: ILogin) {
+        const existingUser = await this.findUserByEmail(data.email);
+        if (!existingUser) {
+            throw createError.BadRequest('Incorrect email or password');
+        }
+        const valid = await PasswordService.comparePassword(data.password, existingUser.password)
+        if (!valid) {
+            throw createError.BadRequest('Incorrect email or password');
+        }
+        return AuthService.getInstance().authenticate(existingUser.id);
     }
 
 }
