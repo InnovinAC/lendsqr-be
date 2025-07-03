@@ -13,17 +13,17 @@ class WalletController extends Controller {
     private authorizationMiddleware!: AuthorizationMiddleware;
     private walletService!: WalletService;
 
-    constructor(router: Router) {
-        super(router);
-        this.setControllerMiddleware(this.authorizationMiddleware.authorizeUser);
+    constructor() {
+        super(Router());
     }
 
     initMiddleware(): void {
-        this.authorizationMiddleware = new AuthorizationMiddleware()
+        this.authorizationMiddleware = new AuthorizationMiddleware();
+        this.setControllerMiddleware(this.authorizationMiddleware.authorizeUser);
     }
 
     initServices(): void {
-        this.walletService = WalletService.getInstance()
+        this.walletService = WalletService.getInstance();
     }
 
     initRoutes(): void {
@@ -37,31 +37,31 @@ class WalletController extends Controller {
     // If this were a real app, by design users should have multiple
     // wallets in various currencies.
     getUserWallet(): void {
-        this.router.get('/wallet',
+        this.router.get('/',
             async (req: Request, res: Response, next: NextFunction) => {
                 try {
                     const data = await this.walletService.findWalletByUser(req.user.id);
                     ResponseHandler.sendSuccess(res, "User Wallet", 200, data);
                 } catch (e: any) {
-                    return next(createError(e))
+                    return next(createError(e));
                 }
             });
     }
 
     getUserTransactions(): void {
-        this.router.get('/wallet/transactions',
+        this.router.get('/transactions',
             async (req: Request, res: Response, next: NextFunction) => {
                 try {
                     const data = await this.walletService.getUserTransactions(req.user.id);
                     ResponseHandler.sendSuccess(res, "User Transactions", 200, data);
                 } catch (e: any) {
-                    return next(createError(e))
+                    return next(createError(e));
                 }
             });
     }
 
     fundUserWallet(): void {
-        this.router.post("/wallet/fund",
+        this.router.post("/fund",
             RequestValidator.validate(userSchema.FUND_WALLET),
             async (req: TypedRequest<{}, z.infer<typeof userSchema.FUND_WALLET>>,
                    res: Response,
@@ -84,7 +84,7 @@ class WalletController extends Controller {
     }
 
     withdrawFunds(): void {
-        this.router.post("/wallet/withdraw",
+        this.router.post("/withdraw",
             RequestValidator.validate(userSchema.WITHDRAW_FUNDS),
             async (req: TypedRequest<{}, z.infer<typeof userSchema.WITHDRAW_FUNDS>>,
                    res: Response,
@@ -108,7 +108,7 @@ class WalletController extends Controller {
     }
 
     transferFunds(): void {
-        this.router.post("/wallet/transfer",
+        this.router.post("/transfer",
             RequestValidator.validate(userSchema.TRANSFER_FUNDS),
             async (req: TypedRequest<{}, z.infer<typeof userSchema.TRANSFER_FUNDS>>,
                    res: Response,
@@ -128,8 +128,6 @@ class WalletController extends Controller {
             }
         );
     }
-
-
 }
 
 export default WalletController;

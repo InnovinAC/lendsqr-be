@@ -37,8 +37,7 @@ describe('AuthenticationController (via AuthRoute)', () => {
     app = express();
     app.use(express.json());
 
-    const router = express.Router();
-    app.use('/api/v1/auth', new AuthenticationController(router).router);
+    app.use('/api/v1/auth', new AuthenticationController().router);
 
     mockedResponseHandler.sendSuccess.mockImplementation((res, message, status, data) => {
       return res.status(status as number).json({ message, data });

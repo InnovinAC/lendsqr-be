@@ -13,9 +13,8 @@ import {z} from "zod";
 class AuthenticationController extends Controller {
     private authenticationMiddleware!: AuthenticationMiddleware;
     private rateLimiter!: RateLimitRequestHandler;
-    constructor(router: Router) {
-        super(router);
-        this.setControllerMiddleware(this.rateLimiter)
+    constructor() {
+        super(Router());
     }
 
     initMiddleware(): void {
@@ -27,8 +26,8 @@ class AuthenticationController extends Controller {
             handler(_req: Request, _res: Response, next: NextFunction): void {
                 next(createError.TooManyRequests("Too many requests. Try again later."));
             }
-        })
-
+        });
+        this.setControllerMiddleware(this.rateLimiter);
     }
 
     initRoutes(): void {
@@ -36,8 +35,7 @@ class AuthenticationController extends Controller {
         this.loginUser();
     }
 
-    initServices(): void {
-    }
+    initServices(): void {}
 
     public registerUser() {
         this.router.post("/register", RequestValidator.validate(authenticationSchema.REGISTER));
@@ -47,9 +45,8 @@ class AuthenticationController extends Controller {
                 const data = await UserService.getInstance().createUser(req.body);
                 ResponseHandler.sendSuccess(res, "Registration successful", 201, data);
             } catch (e: any) {
-                next(createError(e))
+                next(createError(e));
             }
-
         });
     }
 
@@ -64,12 +61,10 @@ class AuthenticationController extends Controller {
                 const data = await UserService.getInstance().loginUser(req.body);
                 ResponseHandler.sendSuccess(res, "Login successful", 200, data);
             } catch (e: any) {
-                next(createError(e))
+                next(createError(e));
             }
-
         });
     }
-
 }
 
 export default AuthenticationController;

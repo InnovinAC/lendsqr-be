@@ -7,13 +7,13 @@ import AuthorizationMiddleware from "@/middleware/authorization/authorization.mi
 class ProfileController extends Controller {
     private authorizationMiddleware!: AuthorizationMiddleware;
 
-    constructor(router: Router) {
-        super(router);
-        this.setControllerMiddleware(this.authorizationMiddleware.authorizeUser);
+    constructor() {
+        super(Router());
     }
 
     initMiddleware(): void {
-        this.authorizationMiddleware = new AuthorizationMiddleware()
+        this.authorizationMiddleware = new AuthorizationMiddleware();
+        this.setControllerMiddleware(this.authorizationMiddleware.authorizeUser);
     }
 
     initServices(): void {
@@ -24,14 +24,14 @@ class ProfileController extends Controller {
     }
 
     getUserProfile(): void {
-        this.router.get('/profile', (req: Request, res: Response, next: NextFunction) => {
+        this.router.get('/', (req: Request, res: Response, next: NextFunction) => {
             try {
                 const data = req.user;
                 ResponseHandler.sendSuccess(res, "User Profile", 200, data);
             } catch (e: any) {
-                return next(createError(e))
+                return next(createError(e));
             }
-        })
+        });
     }
 }
 

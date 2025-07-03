@@ -8,8 +8,8 @@ export class UserRoute implements RouteInterface {
     }
 
     initRoutes(): void {
-        this.appRouter.use('/user', new ProfileController(this.appRouter).router);
-        this.appRouter.use('/user', new WalletController(this.appRouter).router);
+        this.appRouter.use('/user/profile', new ProfileController().router);
+        this.appRouter.use('/user/wallet', new WalletController().router);
     }
 
 }
