@@ -7,6 +7,8 @@ import UserService from "@/services/user.service";
 import ResponseHandler from "@/lib/api/response-handler.lib";
 import createError from "http-errors";
 import {rateLimit, RateLimitRequestHandler} from 'express-rate-limit'
+import {TypedRequest} from "@/index";
+import {z} from "zod";
 
 class AuthenticationController extends Controller {
     private authenticationMiddleware!: AuthenticationMiddleware;
@@ -53,7 +55,11 @@ class AuthenticationController extends Controller {
 
     public loginUser() {
         this.router.post("/login", RequestValidator.validate(authenticationSchema.LOGIN));
-        this.router.post("/login", async (req: Request, res: Response, next: NextFunction) => {
+        this.router.post("/login",
+            async (req: TypedRequest<{}, z.infer<typeof authenticationSchema.LOGIN>>,
+                   res: Response,
+                   next: NextFunction
+            ) => {
             try {
                 const data = await UserService.getInstance().loginUser(req.body);
                 ResponseHandler.sendSuccess(res, "Login successful", 200, data);

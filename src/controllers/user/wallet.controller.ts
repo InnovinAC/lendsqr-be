@@ -6,6 +6,8 @@ import AuthorizationMiddleware from "@/middleware/authorization/authorization.mi
 import WalletService from "@/services/wallet.service";
 import RequestValidator from "@/lib/api/request-validator.lib";
 import userSchema from "@/validators/user.validator";
+import {TypedRequest} from "@/index";
+import {z} from "zod";
 
 class WalletController extends Controller {
     private authorizationMiddleware!: AuthorizationMiddleware;
@@ -61,7 +63,10 @@ class WalletController extends Controller {
     fundUserWallet(): void {
         this.router.post("/fund",
             RequestValidator.validate(userSchema.FUND_WALLET),
-            async (req: Request, res: Response, next: NextFunction) => {
+            async (req: TypedRequest<{}, z.infer<typeof userSchema.FUND_WALLET>>,
+                   res: Response,
+                   next: NextFunction
+            ) => {
                 try {
                     const wallet = await this.walletService.findWalletByUser(req.user.id);
                     await this.walletService.fundWallet({
@@ -81,7 +86,10 @@ class WalletController extends Controller {
     withdrawFunds(): void {
         this.router.post("/withdraw",
             RequestValidator.validate(userSchema.WITHDRAW_FUNDS),
-            async (req: Request, res: Response, next: NextFunction) => {
+            async (req: TypedRequest<{}, z.infer<typeof userSchema.WITHDRAW_FUNDS>>,
+                   res: Response,
+                   next: NextFunction
+            ) => {
                 try {
                     const wallet = await this.walletService.findWalletByUser(req.user.id);
 
@@ -102,7 +110,10 @@ class WalletController extends Controller {
     transferFunds(): void {
         this.router.post("/transfer",
             RequestValidator.validate(userSchema.TRANSFER_FUNDS),
-            async (req: Request, res: Response, next: NextFunction) => {
+            async (req: TypedRequest<{}, z.infer<typeof userSchema.TRANSFER_FUNDS>>,
+                   res: Response,
+                   next: NextFunction
+            ) => {
                 try {
                     await this.walletService.transferFunds({
                         user_id: req.user.id,
