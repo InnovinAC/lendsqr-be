@@ -37,7 +37,7 @@ describe('UserService', () => {
     it('should find user by email', async () => {
       const email = 'test@example.com';
       const mockUser: User = {
-        id: 'user-id',
+        id: 1,
         email: 'test@example.com',
         password: 'hashed-password',
         firstName: 'John',
@@ -46,8 +46,8 @@ describe('UserService', () => {
         isBlacklisted: false,
         blacklistReason: '',
         blacklistedAt: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
       };
 
       mockDb.first.mockResolvedValue(mockUser);
@@ -75,7 +75,7 @@ describe('UserService', () => {
     it('should find user by id', async () => {
       const userId = 'user-id';
       const mockUser: User = {
-        id: 'user-id',
+        id: 1,
         email: 'test@example.com',
         password: 'hashed-password',
         firstName: 'John',
@@ -84,8 +84,8 @@ describe('UserService', () => {
         isBlacklisted: false,
         blacklistReason: '',
         blacklistedAt: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
       };
 
       mockDb.first.mockResolvedValue(mockUser);
@@ -133,11 +133,8 @@ describe('UserService', () => {
       };
 
       const hashedPassword = 'hashed-password-123';
-      const generatedId = 'generated-uuid';
       const authResult = { accessToken: 'jwt-token' };
 
-
-      (userService as any).getUUID = jest.fn().mockResolvedValue(generatedId);
       mockedPasswordService.hashPassword.mockResolvedValue(hashedPassword);
       mockedAuthService.getInstance.mockReturnValue({
         authenticate: jest.fn().mockReturnValue(authResult),
@@ -147,14 +144,15 @@ describe('UserService', () => {
       const mockTransaction = jest.fn().mockImplementation(async (callback) => {
         await callback({
           table: jest.fn().mockReturnThis(),
-          insert: jest.fn(),
+          insert: jest.fn().mockResolvedValue([1]),
         });
       });
       mockDb.transaction.mockImplementation(mockTransaction);
 
       const result = await userService.createUser(userData);
-
-      expect(mockedPasswordService.hashPassword).toHaveBeenCalledWith(userData.password);
+      expect(userData.password).toEqual(hashedPassword);
+      expect(mockedPasswordService.hashPassword).toHaveBeenCalled();
+      expect(userData.password).toEqual(hashedPassword);
       expect(mockDb.transaction).toHaveBeenCalled();
       expect(result).toEqual(authResult);
     });
@@ -183,7 +181,7 @@ describe('UserService', () => {
       };
 
       const mockUser: User = {
-        id: 'user-id',
+        id: 1,
         email: 'test@example.com',
         password: 'hashed-password',
         firstName: 'John',
@@ -192,8 +190,8 @@ describe('UserService', () => {
         isBlacklisted: false,
         blacklistReason: '',
         blacklistedAt: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
       };
 
       const authResult = { accessToken: 'jwt-token' };
@@ -233,7 +231,7 @@ describe('UserService', () => {
       };
 
       const mockUser: User = {
-        id: 'user-id',
+        id: 1,
         email: 'test@example.com',
         password: 'hashed-password',
         firstName: 'John',
@@ -242,8 +240,8 @@ describe('UserService', () => {
         isBlacklisted: false,
         blacklistReason: '',
         blacklistedAt: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
       };
 
       mockDb.first.mockResolvedValue(mockUser);

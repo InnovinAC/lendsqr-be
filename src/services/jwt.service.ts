@@ -3,7 +3,7 @@ import commonConfig from "@/config/common.config";
 
 class JwtService {
 
-    sign(userId: string, expiry: any) {
+    sign(userId: number, expiry: any) {
         return jwt.sign({userId}, commonConfig.jwt.secret, {expiresIn: expiry});
     }
 

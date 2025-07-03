@@ -6,7 +6,7 @@ class AuthService extends Service {
         super();
     }
 
-    authenticate(userId: string) {
+    authenticate(userId: number) {
         return {accessToken: JwtService.sign(userId, '1h')}
     };
 }

@@ -14,7 +14,6 @@ class AuthorizationMiddleware {
         }
         const user = await UserService.getInstance().findUserById(decodedObj.userId);
 
-
         if (!user) {
             return next(createError.Unauthorized("Invalid User"));
         }
