@@ -33,9 +33,11 @@ class UserService extends Service {
         const id = await this.db.transaction(async (tx) => {
             const [userId] = await tx.table(TableName.USERS).insert(data);
 
-            await tx.table(TableName.WALLET).insert({
+            console.log(userId)
+
+           console.log(await tx.table(TableName.WALLET).insert({
                 user_id: userId,
-            });
+            }));
             return userId
         });
 

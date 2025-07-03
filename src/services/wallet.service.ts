@@ -27,7 +27,7 @@ class WalletService extends Service {
             .first();
     }
 
-    async createWallet(data: ICreateWallet) {
+    async createWallet(data: ICreateWallet): Promise<Wallet> {
         if (!data.currency) data.currency = "NGN";
         if (await this.findWalletByUser(data.user_id)) {
             throw createError.BadRequest("Wallet already exists");
@@ -39,7 +39,7 @@ class WalletService extends Service {
             .first();
     }
 
-    async fundWallet(data: IFundWallet) {
+    async fundWallet(data: IFundWallet): Promise<void> {
         const wallet = await this.findWalletById(data.wallet_id);
         if (!wallet) {
             throw createError.NotFound("Wallet not found");
@@ -56,7 +56,7 @@ class WalletService extends Service {
         })
     }
 
-    async withdrawFunds(data: IWithdrawFunds) {
+    async withdrawFunds(data: IWithdrawFunds): Promise<void> {
         const wallet = await this.canWithdrawAmount(data.wallet_id, data.amount);
         await this.db.transaction(async (tx) => {
             await this.addTransaction({
@@ -138,16 +138,16 @@ class WalletService extends Service {
             query.andWhere('type', type);
         }
 
-        return query.orderBy('createdAt', 'desc');
+        return query.orderBy('created_at', 'desc');
     }
 
-    async addTransaction(data: Partial<Transaction>, transaction?: Knex.Transaction) {
+    private async addTransaction(data: Partial<Transaction>, transaction?: Knex.Transaction) {
         (transaction || this.db).table<Transaction>(TableName.TRANSACTIONS)
             .insert(data);
     }
 
     // Making use of increment for atomicity to avoid wrong values
-    async increaseWalletBalance(id: number, amount: number, transaction?: Knex.Transaction): Promise<void> {
+    private async increaseWalletBalance(id: number, amount: number, transaction?: Knex.Transaction): Promise<void> {
         (transaction || this.db).table(TableName.WALLET)
             .where('id', id)
             .increment({
@@ -156,7 +156,7 @@ class WalletService extends Service {
     }
 
     // Making use of decrement for atomicity to avoid wrong values
-    async decreaseWalletBalance(id: number, amount: number, transaction?: Knex.Transaction) {
+    private async decreaseWalletBalance(id: number, amount: number, transaction?: Knex.Transaction): Promise<void> {
         (transaction || this.db).table(TableName.WALLET)
             .where('id', id)
             .decrement({
@@ -165,7 +165,7 @@ class WalletService extends Service {
     }
 
     // check if user can take out a particular amount from their wallet
-    async canWithdrawAmount(walletId: number, amount: number): Promise<Wallet> {
+    private async canWithdrawAmount(walletId: number, amount: number): Promise<Wallet> {
         const wallet = await this.findWalletById(walletId);
         if (!wallet) {
             throw createError.NotFound("Wallet not found");

@@ -37,10 +37,10 @@ class WalletController extends Controller {
     // If this were a real app, by design users should have multiple
     // wallets in various currencies.
     getUserWallet(): void {
-        this.router.get('/',
-            (req: Request, res: Response, next: NextFunction) => {
+        this.router.get('/wallet',
+            async (req: Request, res: Response, next: NextFunction) => {
                 try {
-                    const data = this.walletService.findWalletByUser(req.user.id);
+                    const data = await this.walletService.findWalletByUser(req.user.id);
                     ResponseHandler.sendSuccess(res, "User Wallet", 200, data);
                 } catch (e: any) {
                     return next(createError(e))
@@ -49,10 +49,10 @@ class WalletController extends Controller {
     }
 
     getUserTransactions(): void {
-        this.router.get('/transactions',
-            (req: Request, res: Response, next: NextFunction) => {
+        this.router.get('/wallet/transactions',
+            async (req: Request, res: Response, next: NextFunction) => {
                 try {
-                    const data = this.walletService.getUserTransactions(req.user.id);
+                    const data = await this.walletService.getUserTransactions(req.user.id);
                     ResponseHandler.sendSuccess(res, "User Transactions", 200, data);
                 } catch (e: any) {
                     return next(createError(e))
@@ -61,7 +61,7 @@ class WalletController extends Controller {
     }
 
     fundUserWallet(): void {
-        this.router.post("/fund",
+        this.router.post("/wallet/fund",
             RequestValidator.validate(userSchema.FUND_WALLET),
             async (req: TypedRequest<{}, z.infer<typeof userSchema.FUND_WALLET>>,
                    res: Response,
@@ -84,7 +84,7 @@ class WalletController extends Controller {
     }
 
     withdrawFunds(): void {
-        this.router.post("/withdraw",
+        this.router.post("/wallet/withdraw",
             RequestValidator.validate(userSchema.WITHDRAW_FUNDS),
             async (req: TypedRequest<{}, z.infer<typeof userSchema.WITHDRAW_FUNDS>>,
                    res: Response,
@@ -108,7 +108,7 @@ class WalletController extends Controller {
     }
 
     transferFunds(): void {
-        this.router.post("/transfer",
+        this.router.post("/wallet/transfer",
             RequestValidator.validate(userSchema.TRANSFER_FUNDS),
             async (req: TypedRequest<{}, z.infer<typeof userSchema.TRANSFER_FUNDS>>,
                    res: Response,

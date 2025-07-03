@@ -24,7 +24,7 @@ class ProfileController extends Controller {
     }
 
     getUserProfile(): void {
-        this.router.get('/', (req: Request, res: Response, next: NextFunction) => {
+        this.router.get('/profile', (req: Request, res: Response, next: NextFunction) => {
             try {
                 const data = req.user;
                 ResponseHandler.sendSuccess(res, "User Profile", 200, data);
