@@ -7,4 +7,5 @@
 6. OOP structure for controller, middleware and services - done
 7. Make use of transactions especially when updating user wallet
 8. Organize test files into test folder
-9. fix: user profile should not return sensitive data
+9. fix: user profile should not return sensitive data - done
+10. Add user sessions

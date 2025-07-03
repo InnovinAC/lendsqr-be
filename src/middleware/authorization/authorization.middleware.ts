@@ -14,10 +14,12 @@ class AuthorizationMiddleware {
         }
         const user = await UserService.getInstance().findUserById(decodedObj.userId);
 
+
         if (!user) {
             return next(createError.Unauthorized("Invalid User"));
         }
-        req.user = user;
+        const {password, ...theRest} = user;
+        req.user = theRest;
         return next();
     }
 
