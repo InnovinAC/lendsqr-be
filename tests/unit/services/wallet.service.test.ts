@@ -1,6 +1,6 @@
 import WalletService from '@/services/wallet.service';
 import createError from 'http-errors';
-import {TableName} from "../config/database.config";
+import {TableName} from "@/config/database.config";
 
 jest.mock('@/lib/service/service.lib');
 
@@ -233,4 +233,4 @@ describe('WalletService', () => {
             );
         });
     });
-}); 
+});

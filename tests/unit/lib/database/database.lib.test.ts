@@ -12,8 +12,8 @@ describe('Database Singleton', () => {
     });
 
     afterAll(done => {
-         dbConnection.destroy();
-         done();
+        dbConnection.destroy();
+        done();
     });
 
     it('should return an instance of Database', () => {
