@@ -4,6 +4,9 @@ import { allRoutes } from '@/routes';
 import Database from '@/lib/database/database.lib';
 import logger from '@/utils/logger.utils';
 import ResponseHandler from '@/lib/api/response-handler.lib';
+import swaggerJSDoc from 'swagger-jsdoc';
+import SwaggerUI from "swagger-ui-express"
+import swaggerOptions from './docs/swagger.options';
 
 class App {
   private readonly _app: Express;
@@ -22,6 +25,7 @@ class App {
     this.initRoutes();
     this.listen(commonConfig.server.port);
     this.setupGracefulShutdown();
+    this.setupSwagger();
   }
 
   private listen(port: string | number) {
@@ -75,10 +79,10 @@ class App {
       await this._database.testConnection();
 
       // Run migrations
-      if (commonConfig.environment !== 'test') {
-        logger.info('Running database migrations...');
-        await this._database.runMigrations();
-      }
+      // if (commonConfig.environment !== 'test') {
+      //   logger.info('Running database migrations...');
+      //   await this._database.runMigrations();
+      // }
 
       logger.info('Database initialized successfully');
     } catch (error) {
@@ -112,6 +116,15 @@ class App {
 
     process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
     process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+  }
+
+  /**
+   * sets up swagger docs
+   * @private
+   */
+  private setupSwagger() {
+    const swaggerSpec = swaggerJSDoc(swaggerOptions);
+    this._app.use('/api-docs', SwaggerUI.serve, SwaggerUI.setup(swaggerSpec));
   }
 
   // Return the express app instance

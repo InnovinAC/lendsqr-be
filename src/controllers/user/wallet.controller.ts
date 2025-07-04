@@ -34,8 +34,25 @@ class WalletController extends Controller {
     this.transferFunds();
   }
 
-  // If this were a real app, by design users should have multiple
-  // wallets in various currencies.
+  /**
+   * @openapi
+   * /user/wallet/:
+   *   get:
+   *     tags:
+   *       - Wallet
+   *     summary: Get user wallet
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: User wallet
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/Wallet'
+   *       401:
+   *         description: Unauthorized
+   */
   getUserWallet(): void {
     this.router.get('/', async (req: Request, res: Response, next: NextFunction) => {
       try {
@@ -47,6 +64,27 @@ class WalletController extends Controller {
     });
   }
 
+  /**
+   * @openapi
+   * /user/wallet/transactions:
+   *   get:
+   *     tags:
+   *       - Wallet
+   *     summary: Get user wallet transactions
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: User transactions
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: array
+   *               items:
+   *                 $ref: '#/components/schemas/Transaction'
+   *       401:
+   *         description: Unauthorized
+   */
   getUserTransactions(): void {
     this.router.get('/transactions', async (req: Request, res: Response, next: NextFunction) => {
       try {
@@ -58,6 +96,39 @@ class WalletController extends Controller {
     });
   }
 
+  /**
+   * @openapi
+   * /user/wallet/fund:
+   *   post:
+   *     tags:
+   *       - Wallet
+   *     summary: Fund user wallet
+   *     security:
+   *       - bearerAuth: []
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - amount
+   *             properties:
+   *               amount:
+   *                 type: number
+   *                 minimum: 100
+   *               description:
+   *                 type: string
+   *               metadata:
+   *                 type: object
+   *     responses:
+   *       200:
+   *         description: Wallet funded successfully.
+   *       401:
+   *         description: Unauthorized
+   *       422:
+   *         description: Validation error
+   */
   fundUserWallet(): void {
     this.router.post(
       '/fund',
@@ -83,6 +154,42 @@ class WalletController extends Controller {
     );
   }
 
+  /**
+   * @openapi
+   * /user/wallet/withdraw:
+   *   post:
+   *     tags:
+   *       - Wallet
+   *     summary: Withdraw funds from wallet
+   *     security:
+   *       - bearerAuth: []
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - amount
+   *             properties:
+   *               amount:
+   *                 type: number
+   *                 minimum: 500
+   *               bank_details:
+   *                 type: object
+   *                 properties:
+   *                   bank_name:
+   *                     type: string
+   *                   account_number:
+   *                     type: string
+   *     responses:
+   *       200:
+   *         description: Withdrawal successful.
+   *       401:
+   *         description: Unauthorized
+   *       422:
+   *         description: Validation error
+   */
   withdrawFunds(): void {
     this.router.post(
       '/withdraw',
@@ -109,6 +216,40 @@ class WalletController extends Controller {
     );
   }
 
+  /**
+   * @openapi
+   * /user/wallet/transfer:
+   *   post:
+   *     tags:
+   *       - Wallet
+   *     summary: Transfer funds to another user
+   *     security:
+   *       - bearerAuth: []
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - recipient_user_id
+   *               - amount
+   *             properties:
+   *               recipient_user_id:
+   *                 type: integer
+   *               amount:
+   *                 type: number
+   *                 minimum: 100
+   *               description:
+   *                 type: string
+   *     responses:
+   *       200:
+   *         description: Transfer successful.
+   *       401:
+   *         description: Unauthorized
+   *       422:
+   *         description: Validation error
+   */
   transferFunds(): void {
     this.router.post(
       '/transfer',

@@ -22,6 +22,25 @@ class ProfileController extends Controller {
     this.getUserProfile();
   }
 
+  /**
+   * @openapi
+   * /user/profile/:
+   *   get:
+   *     tags:
+   *       - User
+   *     summary: Get user profile
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: User profile
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/User'
+   *       401:
+   *         description: Unauthorized
+   */
   getUserProfile(): void {
     this.router.get('/', (req: Request, res: Response, next: NextFunction) => {
       try {

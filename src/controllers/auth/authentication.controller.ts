@@ -37,6 +37,55 @@ class AuthenticationController extends Controller {
 
   initServices(): void {}
 
+  /**
+   * @openapi
+   * /auth/register:
+   *   post:
+   *     tags:
+   *       - Auth
+   *     summary: Register a new user
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - email
+   *               - password
+   *               - first_name
+   *               - last_name
+   *               - phone_number
+   *             properties:
+   *               email:
+   *                 type: string
+   *                 format: email
+   *               password:
+   *                 type: string
+   *                 minLength: 8
+   *               first_name:
+   *                 type: string
+   *                 minLength: 3
+   *               last_name:
+   *                 type: string
+   *                 minLength: 3
+   *               phone_number:
+   *                 type: string
+   *     responses:
+   *       201:
+   *         description: Registration successful
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 accessToken:
+   *                   type: string
+   *       400:
+   *         description: Validation error
+   *       409:
+   *         description: Email already exists
+   */
   public registerUser() {
     this.router.post('/register', RequestValidator.validate(authenticationSchema.REGISTER));
     this.router.post('/register', this.authenticationMiddleware.checkExistingEmail);
@@ -50,6 +99,44 @@ class AuthenticationController extends Controller {
     });
   }
 
+  /**
+   * @openapi
+   * /auth/login:
+   *   post:
+   *     tags:
+   *       - Auth
+   *     summary: Login a user
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - email
+   *               - password
+   *             properties:
+   *               email:
+   *                 type: string
+   *                 format: email
+   *               password:
+   *                 type: string
+   *                 minLength: 8
+   *     responses:
+   *       200:
+   *         description: Login successful
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 accessToken:
+   *                   type: string
+   *       400:
+   *         description: Invalid credentials
+   *       429:
+   *         description: Too many requests
+   */
   public loginUser() {
     this.router.post('/login', RequestValidator.validate(authenticationSchema.LOGIN));
     this.router.post(
