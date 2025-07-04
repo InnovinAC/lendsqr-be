@@ -7,12 +7,14 @@ import UserService from "@/services/user.service";
 import ResponseHandler from "@/lib/api/response-handler.lib";
 import createError from "http-errors";
 import {rateLimit, RateLimitRequestHandler} from 'express-rate-limit'
+import {TypedRequest} from "@/index";
+import {z} from "zod";
 
 class AuthenticationController extends Controller {
     private authenticationMiddleware!: AuthenticationMiddleware;
     private rateLimiter!: RateLimitRequestHandler;
-    constructor(router: Router) {
-        super(router);
+    constructor() {
+        super(Router());
     }
 
     initMiddleware(): void {
@@ -21,9 +23,11 @@ class AuthenticationController extends Controller {
             windowMs: 1000 * 60 * 5, // 5 mins,
             limit: 10,
             legacyHeaders: false,
-            message: "Too many requests, try again later.",
-        })
-
+            handler(_req: Request, _res: Response, next: NextFunction): void {
+                next(createError.TooManyRequests("Too many requests. Try again later."));
+            }
+        });
+        this.setControllerMiddleware(this.rateLimiter);
     }
 
     initRoutes(): void {
@@ -31,11 +35,9 @@ class AuthenticationController extends Controller {
         this.loginUser();
     }
 
-    initServices(): void {
-    }
+    initServices(): void {}
 
     public registerUser() {
-        this.router.post("/register", this.rateLimiter);
         this.router.post("/register", RequestValidator.validate(authenticationSchema.REGISTER));
         this.router.post("/register", this.authenticationMiddleware.checkExistingEmail);
         this.router.post("/register", async (req: Request, res: Response, next: NextFunction) => {
@@ -43,26 +45,26 @@ class AuthenticationController extends Controller {
                 const data = await UserService.getInstance().createUser(req.body);
                 ResponseHandler.sendSuccess(res, "Registration successful", 201, data);
             } catch (e: any) {
-                next(createError(e))
+                next(createError(e));
             }
-
         });
     }
 
     public loginUser() {
-        this.router.post("/login", this.rateLimiter);
         this.router.post("/login", RequestValidator.validate(authenticationSchema.LOGIN));
-        this.router.post("/login", async (req: Request, res: Response, next: NextFunction) => {
+        this.router.post("/login",
+            async (req: TypedRequest<{}, z.infer<typeof authenticationSchema.LOGIN>>,
+                   res: Response,
+                   next: NextFunction
+            ) => {
             try {
                 const data = await UserService.getInstance().loginUser(req.body);
                 ResponseHandler.sendSuccess(res, "Login successful", 200, data);
             } catch (e: any) {
-                next(createError(e))
+                next(createError(e));
             }
-
         });
     }
-
 }
 
 export default AuthenticationController;

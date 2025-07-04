@@ -59,11 +59,9 @@ describe('AuthController Integration', () => {
     app = express();
     app.use(express.json());
 
-    const router = Router();
-    const controller = new AuthenticationController(router);
+    const controller = new AuthenticationController();
     controller.initMiddleware();
     controller.initRoutes();
-
     app.use('/api/v1/auth', controller.router);
   });
 

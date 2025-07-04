@@ -12,7 +12,7 @@ describe('JwtService', () => {
 
   describe('sign', () => {
     it('should sign a token with userId and expiry', () => {
-      const userId = 'test-user-id';
+      const userId = 1;
       const expiry = '1h';
       const expectedToken = 'mocked-jwt-token';
 
@@ -29,7 +29,7 @@ describe('JwtService', () => {
     });
 
     it('should handle different expiry formats', () => {
-      const userId = 'test-user-id';
+      const userId = 1;
       const expiry = '7d';
       const expectedToken = 'mocked-jwt-token';
 
@@ -49,7 +49,7 @@ describe('JwtService', () => {
   describe('verify', () => {
     it('should verify a valid token', () => {
       const token = 'valid-jwt-token';
-      const expectedPayload = { userId: 'test-user-id', iat: 1234567890 };
+      const expectedPayload = { userId: 1, iat: 1234567890 };
 
       mockedJwt.verify.mockReturnValue(expectedPayload as any);
 

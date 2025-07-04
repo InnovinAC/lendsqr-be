@@ -15,7 +15,7 @@ describe('AuthService', () => {
 
   describe('authenticate', () => {
     it('should authenticate user and return access token', () => {
-      const userId = 'test-user-id';
+      const userId = 1;
       const expectedToken = 'mocked-access-token';
 
       mockedJwtService.sign.mockReturnValue(expectedToken);
@@ -27,7 +27,7 @@ describe('AuthService', () => {
     });
 
     it('should handle different user IDs', () => {
-      const userId = 'another-user-id';
+      const userId = 2;
       const expectedToken = 'another-mocked-token';
 
       mockedJwtService.sign.mockReturnValue(expectedToken);
@@ -39,7 +39,7 @@ describe('AuthService', () => {
     });
 
     it('should throw error when JWT signing fails', () => {
-      const userId = 'test-user-id';
+      const userId = 1;
       const error = new Error('JWT signing failed');
 
       mockedJwtService.sign.mockImplementation(() => {

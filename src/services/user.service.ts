@@ -28,23 +28,18 @@ class UserService extends Service {
     }
 
     async createUser(data: ICreateUser) {
-        const generatedId = await this.getUUID();
+        // const generatedId = await this.getUUID();
+        data.password = await PasswordService.hashPassword(data.password)
+        const id = await this.db.transaction(async (tx) => {
+            const [userId] = await tx.table(TableName.USERS).insert(data);
 
-        const userWithId = {
-            ...data,
-            id: generatedId,
-            password: await PasswordService.hashPassword(data.password),
-        };
-
-        await this.db.transaction(async (tx) => {
-            await tx.table(TableName.USERS).insert(userWithId);
-
-            await tx.table(TableName.WALLET).insert({
-                user_id: generatedId,
+           await tx.table(TableName.WALLET).insert({
+                user_id: userId,
             });
+            return userId
         });
 
-        return AuthService.getInstance().authenticate(generatedId);
+        return AuthService.getInstance().authenticate(id);
     }
 
     async loginUser(data: ILogin) {

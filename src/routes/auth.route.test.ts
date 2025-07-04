@@ -28,7 +28,7 @@ describe('AuthRoute', () => {
 
             authRoute.initRoutes();
 
-            expect(AuthenticationController).toHaveBeenCalledWith(app);
+            expect(AuthenticationController).toHaveBeenCalled();
         });
 
         it('should mount auth routes under /auth prefix', async () => {

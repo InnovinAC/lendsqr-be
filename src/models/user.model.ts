@@ -1,7 +1,7 @@
 import {Timestamp} from "@/models/timestamp";
 
 export interface User extends Timestamp {
-    id: string;
+    id: number;
     email: string;
     password: string;
     firstName: string;

@@ -7,7 +7,7 @@ export class AuthRoute implements RouteInterface {
     constructor(public appRouter: Router) {}
 
     initRoutes(): void {
-        this.appRouter.use('/auth', new AuthenticationController(this.appRouter).router);
+        this.appRouter.use('/auth', new AuthenticationController().router);
     }
 
 }
