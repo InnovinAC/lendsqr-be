@@ -8,62 +8,70 @@ jest.mock('@/controllers/user/profile.controller');
 jest.mock('@/controllers/user/wallet.controller');
 
 describe('UserRoute', () => {
-    let app: express.Express;
-    let userRoute: UserRoute;
+  let app: express.Express;
+  let userRoute: UserRoute;
 
-    beforeEach(() => {
-        jest.clearAllMocks();
+  beforeEach(() => {
+    jest.clearAllMocks();
 
-        app = express();
-        app.use(express.json());
+    app = express();
+    app.use(express.json());
 
-        userRoute = new UserRoute(app);
+    userRoute = new UserRoute(app);
+  });
+
+  describe('initRoutes', () => {
+    it('should initialize user routes', () => {
+      const mockProfileRouter = Router();
+      const mockWalletRouter = Router();
+
+      const mockProfileController = { router: mockProfileRouter } as Partial<ProfileController>;
+      const mockWalletController = { router: mockWalletRouter } as Partial<WalletController>;
+
+      (ProfileController as jest.Mock).mockImplementation(
+        () => mockProfileController as ProfileController,
+      );
+      (WalletController as jest.Mock).mockImplementation(
+        () => mockWalletController as WalletController,
+      );
+
+      userRoute.initRoutes();
+
+      expect(ProfileController).toHaveBeenCalled();
+      expect(WalletController).toHaveBeenCalled();
     });
 
-    describe('initRoutes', () => {
-        it('should initialize user routes', () => {
-            const mockProfileRouter = Router();
-            const mockWalletRouter = Router();
+    it('should mount profile and wallet routes at correct paths', async () => {
+      const mockProfileRouter = Router();
+      const mockWalletRouter = Router();
 
-            const mockProfileController = { router: mockProfileRouter } as Partial<ProfileController>;
-            const mockWalletController = { router: mockWalletRouter } as Partial<WalletController>;
+      mockProfileRouter.get('/test', (_req, res) => {
+        res.status(200).json({ profile: true });
+      });
 
-            (ProfileController as jest.Mock).mockImplementation(() => mockProfileController as ProfileController);
-            (WalletController as jest.Mock).mockImplementation(() => mockWalletController as WalletController);
+      mockWalletRouter.get('/test', (_req, res) => {
+        res.status(200).json({ wallet: true });
+      });
 
-            userRoute.initRoutes();
+      const mockProfileController = { router: mockProfileRouter } as Partial<ProfileController>;
+      const mockWalletController = { router: mockWalletRouter } as Partial<WalletController>;
 
-            expect(ProfileController).toHaveBeenCalled();
-            expect(WalletController).toHaveBeenCalled();
-        });
+      (ProfileController as jest.Mock).mockImplementation(
+        () => mockProfileController as ProfileController,
+      );
+      (WalletController as jest.Mock).mockImplementation(
+        () => mockWalletController as WalletController,
+      );
 
-        it('should mount profile and wallet routes at correct paths', async () => {
-            const mockProfileRouter = Router();
-            const mockWalletRouter = Router();
+      userRoute.initRoutes();
 
-            mockProfileRouter.get('/test', (_req, res) => {
-                res.status(200).json({ profile: true });
-            });
+      const profileResponse = await request(app).get('/user/profile/test');
+      const walletResponse = await request(app).get('/user/wallet/test');
 
-            mockWalletRouter.get('/test', (_req, res) => {
-                res.status(200).json({ wallet: true });
-            });
-
-            const mockProfileController = { router: mockProfileRouter } as Partial<ProfileController>;
-            const mockWalletController = { router: mockWalletRouter } as Partial<WalletController>;
-
-            (ProfileController as jest.Mock).mockImplementation(() => mockProfileController as ProfileController);
-            (WalletController as jest.Mock).mockImplementation(() => mockWalletController as WalletController);
-
-            userRoute.initRoutes();
-
-            const profileResponse = await request(app).get('/user/profile/test');
-            const walletResponse = await request(app).get('/user/wallet/test');
-
-            expect(profileResponse.status).toBe(200);
-            expect(profileResponse.body).toEqual({ profile: true });
-            expect(walletResponse.status).toBe(200);
-            expect(walletResponse.body).toEqual({ wallet: true });
-        });
+      expect(profileResponse.status).toBe(200);
+      expect(profileResponse.body).toEqual({ profile: true });
+      expect(walletResponse.status).toBe(200);
+      expect(walletResponse.body).toEqual({ wallet: true });
     });
+  });
 });

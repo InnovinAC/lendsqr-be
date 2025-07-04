@@ -8,8 +8,7 @@ You are required to build an MVP (Minimum viable product)  wallet service where
 - A user can fund their account
 - A user can transfer funds to another user’s account
 - A user can withdraw funds from their account.
-- A user with records in the Lendsqr Adjutor [Karma blacklist](https://www.google.com/url?q=https://api.adjutor.io\&sa=D\&source=editors\&ust=1751151409333102\&usg=AOvVaw34uoEugcjfxcYpumWVIWBq) should never be onboarded
-
+- A user with records in the Lendsqr Adjutor [Karma blacklist](https://www.google.com/url?q=https://api.adjutor.io&sa=D&source=editors&ust=1751151409333102&usg=AOvVaw34uoEugcjfxcYpumWVIWBq) should never be onboarded
 
 # Your task is to present  
 
@@ -23,7 +22,6 @@ You are required to build an MVP (Minimum viable product)  wallet service where
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | This assessment is to test your competence and none of the code would be used within Lendsqr.**We understand that as an applicant you do not have the KYC documents and details required and as such you can input dummy text or documents to complete and get through the signup process.** |
 
-
 # Tech stack
 
 - NodeJS (LTS version)
@@ -31,7 +29,6 @@ You are required to build an MVP (Minimum viable product)  wallet service where
 
 * MySQL database
 * TypeScript
-
 
 # What would be assessed
 
@@ -48,7 +45,6 @@ You are required to build an MVP (Minimum viable product)  wallet service where
 - Database design approach
 - Proper use of transaction scoping
 
-
 # Submission mode
 
 - Deploy the API on Heroku or any free hosting cloud  server using the following url path https\://\<candidate-name>-lendsqr-be-test.\<cloud-platform-domain>
@@ -61,5 +57,5 @@ You are required to build an MVP (Minimum viable product)  wallet service where
 
 - Share the url to the GitHub repo
 - A video review of what you have done. In this video, you are required to provide a review you have been asked to do and what has been done, explaining if these match the requirements and if not. **Your face must be visible in all the videos even when sharing a screen. Kindly note that only a [**Loom**](https://www.google.com/url?q=https://loom.com\&sa=D\&source=editors\&ust=1751151409336439\&usg=AOvVaw26iI3Sa_d6L91VyL5DkIjn) video is accepted and must not be more than 3 minutes**.
-- Submit your document and repo URLs by filling this Google Form - [ Lendsqr Engineering assessment submission](https://www.google.com/url?q=https://docs.google.com/forms/d/e/1FAIpQLSfkkH3dUHO0kdMafkHSDRCE76LFRiELFUQkLNqFguyxOCJdng/viewform?usp%3Dpp_url\&sa=D\&source=editors\&ust=1751151409336725\&usg=AOvVaw0S6dUUMCzhgx2Pddr-QvAS)
+- Submit your document and repo URLs by filling this Google Form - [ Lendsqr Engineering assessment submission](https://www.google.com/url?q=https://docs.google.com/forms/d/e/1FAIpQLSfkkH3dUHO0kdMafkHSDRCE76LFRiELFUQkLNqFguyxOCJdng/viewform?usp%3Dpp_url&sa=D&source=editors&ust=1751151409336725&usg=AOvVaw0S6dUUMCzhgx2Pddr-QvAS)
 - Once submitted, send an email to careers\@lendsqr.com notifying them of your submission.

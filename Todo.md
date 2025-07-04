@@ -1,4 +1,5 @@
 # Things I need to do
+
 1. Dockerize codebase, so code reviewer does not need to run the code normally if need be - done
 2. Pagination of GET endpoints
 3. Use zod for request validation - done

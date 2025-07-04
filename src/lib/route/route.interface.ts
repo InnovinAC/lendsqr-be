@@ -1,3 +1,3 @@
 export interface RouteInterface {
-    initRoutes(): void;
+  initRoutes(): void;
 }

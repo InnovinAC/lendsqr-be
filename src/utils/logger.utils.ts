@@ -11,7 +11,7 @@ const logger = createLogger({
     format.json(),
     format.printf(({ timestamp, level, message, ...meta }) => {
       return `${timestamp} [${level}]: ${message} ${Object.keys(meta).length ? JSON.stringify(meta) : ''}`;
-    })
+    }),
   ),
   transports: [
     new transports.Console({
@@ -19,13 +19,13 @@ const logger = createLogger({
         format.colorize(),
         format.printf(({ timestamp, level, message, ...meta }) => {
           return `${timestamp} [${level}]: ${message} ${Object.keys(meta).length ? JSON.stringify(meta) : ''}`;
-        })
-      )
+        }),
+      ),
     }),
     new transports.File({ filename: 'logs/error.log', level: 'error' }),
-    new transports.File({ filename: 'logs/combined.log' })
+    new transports.File({ filename: 'logs/combined.log' }),
   ],
   exitOnError: false,
 });
 
-export default logger; 
+export default logger;

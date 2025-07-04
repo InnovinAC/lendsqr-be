@@ -10,9 +10,7 @@
     "strict": true,
     "skipLibCheck": true,
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     }
   },
   "include": [
@@ -25,9 +23,5 @@
     "db/seeds/**/*.ts",
     "db/seeds/**/*.js"
   ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "src/**/*.test.ts"
-  ]
+  "exclude": ["node_modules", "dist", "src/**/*.test.ts"]
 }

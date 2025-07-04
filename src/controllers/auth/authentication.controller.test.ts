@@ -3,11 +3,10 @@ import express from 'express';
 import UserService from '@/services/user.service';
 import ResponseHandler from '@/lib/api/response-handler.lib';
 import createError from 'http-errors';
-import AuthenticationController from "@/controllers/auth/authentication.controller";
+import AuthenticationController from '@/controllers/auth/authentication.controller';
 
 jest.mock('@/services/user.service');
 jest.mock('@/lib/api/response-handler.lib');
-
 
 jest.mock('@/middleware/authentication/authentication.middleware', () => {
   return jest.fn().mockImplementation(() => ({
@@ -21,7 +20,6 @@ jest.mock('@/lib/api/request-validator.lib', () => ({
     validate: () => (_req: any, _res: any, next: any) => next(),
   },
 }));
-
 
 jest.mock('@/validators/authentication.validator');
 
@@ -70,10 +68,10 @@ describe('AuthenticationController (via AuthRoute)', () => {
 
       expect(mockedUserService.getInstance).toHaveBeenCalled();
       expect(mockedResponseHandler.sendSuccess).toHaveBeenCalledWith(
-          expect.any(Object),
-          'Registration successful',
-          201,
-          authResult
+        expect.any(Object),
+        'Registration successful',
+        201,
+        authResult,
       );
     });
 
@@ -144,37 +142,35 @@ describe('AuthenticationController (via AuthRoute)', () => {
         email: 'test@example.com',
         password: 'wrong-password',
       };
-      await request(app).post('/api/v1/auth/login').send(loginData)
-      await request(app).post('/api/v1/auth/login').send(loginData)
-      await request(app).post('/api/v1/auth/login').send(loginData)
-      await request(app).post('/api/v1/auth/login').send(loginData)
-      await request(app).post('/api/v1/auth/login').send(loginData)
-      await request(app).post('/api/v1/auth/login').send(loginData)
-      await request(app).post('/api/v1/auth/login').send(loginData)
-      await request(app).post('/api/v1/auth/login').send(loginData)
-      await request(app).post('/api/v1/auth/login').send(loginData)
-      await request(app).post('/api/v1/auth/login').send(loginData)
+      await request(app).post('/api/v1/auth/login').send(loginData);
+      await request(app).post('/api/v1/auth/login').send(loginData);
+      await request(app).post('/api/v1/auth/login').send(loginData);
+      await request(app).post('/api/v1/auth/login').send(loginData);
+      await request(app).post('/api/v1/auth/login').send(loginData);
+      await request(app).post('/api/v1/auth/login').send(loginData);
+      await request(app).post('/api/v1/auth/login').send(loginData);
+      await request(app).post('/api/v1/auth/login').send(loginData);
+      await request(app).post('/api/v1/auth/login').send(loginData);
+      await request(app).post('/api/v1/auth/login').send(loginData);
       await request(app).post('/api/v1/auth/login').send(loginData).expect(429);
-
-    })
+    });
 
     it('should rate limit register requests', async () => {
       const loginData = {
         email: 'test@example.com',
         password: 'wrong-password',
       };
-      await request(app).post('/api/v1/auth/register').send(loginData)
-      await request(app).post('/api/v1/auth/register').send(loginData)
-      await request(app).post('/api/v1/auth/register').send(loginData)
-      await request(app).post('/api/v1/auth/register').send(loginData)
-      await request(app).post('/api/v1/auth/register').send(loginData)
-      await request(app).post('/api/v1/auth/register').send(loginData)
-      await request(app).post('/api/v1/auth/register').send(loginData)
-      await request(app).post('/api/v1/auth/register').send(loginData)
-      await request(app).post('/api/v1/auth/register').send(loginData)
-      await request(app).post('/api/v1/auth/register').send(loginData)
+      await request(app).post('/api/v1/auth/register').send(loginData);
+      await request(app).post('/api/v1/auth/register').send(loginData);
+      await request(app).post('/api/v1/auth/register').send(loginData);
+      await request(app).post('/api/v1/auth/register').send(loginData);
+      await request(app).post('/api/v1/auth/register').send(loginData);
+      await request(app).post('/api/v1/auth/register').send(loginData);
+      await request(app).post('/api/v1/auth/register').send(loginData);
+      await request(app).post('/api/v1/auth/register').send(loginData);
+      await request(app).post('/api/v1/auth/register').send(loginData);
+      await request(app).post('/api/v1/auth/register').send(loginData);
       await request(app).post('/api/v1/auth/register').send(loginData).expect(429);
-
-    })
+    });
   });
 });

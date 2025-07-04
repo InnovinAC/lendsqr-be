@@ -2,11 +2,9 @@ import request from 'supertest';
 import express from 'express';
 import WalletController from '@/controllers/user/wallet.controller';
 
-
 jest.mock('@/middleware/authorization/authorization.middleware', () => {
   return jest.fn().mockImplementation(() => ({
     authorizeUser: jest.fn().mockImplementation((req: any, res: any, next: any) => {
-
       req.user = {
         id: 1,
         email: 'test@example.com',
@@ -17,10 +15,10 @@ jest.mock('@/middleware/authorization/authorization.middleware', () => {
         blacklistReason: '',
         blacklistedAt: null,
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       };
       next();
-    })
+    }),
   }));
 });
 
@@ -40,7 +38,6 @@ describe('WalletController', () => {
       withdrawFunds: jest.fn(),
       transferFunds: jest.fn(),
     };
-
 
     (controller as any).walletService = mockWalletService;
 
@@ -108,9 +105,7 @@ describe('WalletController', () => {
         metadata: { source: 'test' },
       };
 
-      const res = await request(app)
-          .post('/fund')
-          .send(fundData);
+      const res = await request(app).post('/fund').send(fundData);
 
       expect(mockWalletService.findWalletByUser).toHaveBeenCalledWith(1);
       expect(mockWalletService.fundWallet).toHaveBeenCalledWith({
@@ -128,9 +123,7 @@ describe('WalletController', () => {
 
       const fundData = { amount: 100, description: 'Test funding' };
 
-      const res = await request(app)
-          .post('/fund')
-          .send(fundData);
+      const res = await request(app).post('/fund').send(fundData);
 
       expect(res.status).toBe(500);
     });
@@ -150,10 +143,8 @@ describe('WalletController', () => {
         },
       };
 
-      const res = await request(app)
-        .post('/withdraw')
-        .send(withdrawData);
-      
+      const res = await request(app).post('/withdraw').send(withdrawData);
+
       expect(mockWalletService.findWalletByUser).toHaveBeenCalledWith(1);
       expect(mockWalletService.withdrawFunds).toHaveBeenCalledWith({
         wallet_id: 1,
@@ -175,10 +166,8 @@ describe('WalletController', () => {
         bank_details: { bank_name: 'Test Bank', account_number: '1234567890' },
       };
 
-      const res = await request(app)
-        .post('/withdraw')
-        .send(withdrawData);
-      
+      const res = await request(app).post('/withdraw').send(withdrawData);
+
       expect(res.status).toBe(500);
     });
   });
@@ -193,9 +182,7 @@ describe('WalletController', () => {
         description: 'Test transfer',
       };
 
-      const res = await request(app)
-          .post('/transfer')
-          .send(transferData);
+      const res = await request(app).post('/transfer').send(transferData);
 
       expect(mockWalletService.transferFunds).toHaveBeenCalledWith({
         user_id: 1,
@@ -216,9 +203,7 @@ describe('WalletController', () => {
         description: 'Test transfer',
       };
 
-      const res = await request(app)
-          .post('/transfer')
-          .send(transferData);
+      const res = await request(app).post('/transfer').send(transferData);
 
       expect(res.status).toBe(500);
     });
@@ -226,27 +211,21 @@ describe('WalletController', () => {
 
   describe('Validation errors', () => {
     it('should handle invalid fund request body', async () => {
-      const res = await request(app)
-        .post('/fund')
-        .send({ invalid: 'data' });
-      
+      const res = await request(app).post('/fund').send({ invalid: 'data' });
+
       expect(res.status).toBe(422);
     });
 
     it('should handle invalid withdraw request body', async () => {
-      const res = await request(app)
-        .post('/withdraw')
-        .send({ invalid: 'data' });
-      
+      const res = await request(app).post('/withdraw').send({ invalid: 'data' });
+
       expect(res.status).toBe(422);
     });
 
     it('should handle invalid transfer request body', async () => {
-      const res = await request(app)
-        .post('/transfer')
-        .send({ invalid: 'data' });
-      
+      const res = await request(app).post('/transfer').send({ invalid: 'data' });
+
       expect(res.status).toBe(422);
     });
   });
-}); 
+});

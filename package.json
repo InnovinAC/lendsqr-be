@@ -10,7 +10,8 @@
     "migrate": "knex migrate:latest",
     "migrate:make": "knex migrate:make",
     "seed": "knex seed:run",
-    "seed:make": "knex seed:make"
+    "seed:make": "knex seed:make",
+    "format": "prettier --write ."
   },
   "keywords": [],
   "author": "",
@@ -43,7 +44,8 @@
     "supertest": "^7.1.1",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "prettier": "^3.2.5"
   },
   "_moduleAliases": {
     "@": "dist/src"
