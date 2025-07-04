@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://lendsqr.com/assets/icons/LSQ%20Logo.svg" alt="ER Diagram" width="600" />
+</p>
+
 # Lendsqr Backend
 
 A robust, production-ready Node.js/TypeScript backend for Demo Credit, a mobile lending app that requires wallet functionality. Features include secure authentication, session management, wallet operations, transaction history, and automated API documentation.
