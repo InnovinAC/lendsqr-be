@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "sh bin/test.sh && jest",
-    "start": "sh bin/init.sh && npm run build && npm run test && node dist/src/main",
+    "dev": "sh bin/init.sh && npm run build && npm run test && node dist/src/main",
+    "start": "npm run build && npm run test && node dist/src/main",
     "build": "tsc",
     "migrate": "knex migrate:latest",
     "migrate:make": "knex migrate:make",
@@ -14,7 +15,7 @@
     "format": "prettier --write ."
   },
   "keywords": [],
-  "author": "",
+  "author": "Innovin Anuonye",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^6.0.0",
