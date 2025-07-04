@@ -30,9 +30,14 @@ describe('AuthorizationMiddleware', () => {
 
   it('should allow request and extend session if session is valid', async () => {
     mockedJwtService.verify.mockReturnValue({ userId: 1, sessionId: 2 });
-    (middleware as any).sessionService.findActiveSession.mockResolvedValue({ id: 2, expires_at: new Date() });
+    (middleware as any).sessionService.findActiveSession.mockResolvedValue({
+      id: 2,
+      expires_at: new Date(),
+    });
     (middleware as any).sessionService.extendSession.mockResolvedValue(undefined);
-    mockedUserService.prototype.findUserById = jest.fn().mockResolvedValue({ id: 1, email: 'a', password: 'b' });
+    mockedUserService.prototype.findUserById = jest
+      .fn()
+      .mockResolvedValue({ id: 1, email: 'a', password: 'b' });
 
     await middleware.authorizeUser(req, res, next);
     expect((middleware as any).sessionService.extendSession).toHaveBeenCalled();
@@ -47,4 +52,4 @@ describe('AuthorizationMiddleware', () => {
     expect(next).toHaveBeenCalledWith(expect.any(Error));
     expect(next.mock.calls[0][0].message).toMatch(/Session expired or revoked/);
   });
-}); 
+});

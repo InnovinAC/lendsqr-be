@@ -5,7 +5,7 @@ import Database from '@/lib/database/database.lib';
 import logger from '@/utils/logger.utils';
 import ResponseHandler from '@/lib/api/response-handler.lib';
 import swaggerJSDoc from 'swagger-jsdoc';
-import SwaggerUI from "swagger-ui-express"
+import SwaggerUI from 'swagger-ui-express';
 import swaggerOptions from './docs/swagger.options';
 
 class App {

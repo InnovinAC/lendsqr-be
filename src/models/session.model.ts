@@ -1,4 +1,4 @@
-import {Timestamp} from "@/models/timestamp";
+import { Timestamp } from '@/models/timestamp';
 
 export interface Session extends Timestamp {
   id: number;
@@ -6,4 +6,4 @@ export interface Session extends Timestamp {
   created_at: Date;
   expires_at: Date;
   revoked: boolean;
-} 
+}

@@ -48,4 +48,4 @@ describe('SessionService', () => {
     await service.revokeSession(5);
     expect(mockDb.update).toHaveBeenCalled();
   });
-}); 
+});

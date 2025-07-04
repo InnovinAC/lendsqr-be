@@ -52,7 +52,10 @@ const swaggerOptions = {
           properties: {
             id: { type: 'integer' },
             wallet_id: { type: 'integer' },
-            type: { type: 'string', enum: ['fund', 'transfer_in', 'transfer_out', 'transfer', 'withdrawal'] },
+            type: {
+              type: 'string',
+              enum: ['fund', 'transfer_in', 'transfer_out', 'transfer', 'withdrawal'],
+            },
             amount: { type: 'number' },
             balance_before: { type: 'number' },
             balance_after: { type: 'number' },
@@ -78,4 +81,4 @@ const swaggerOptions = {
   apis: ['./src/routes/**/*.ts', './src/controllers/**/*.ts'],
 };
 
-export default swaggerOptions; 
+export default swaggerOptions;

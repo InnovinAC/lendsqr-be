@@ -236,7 +236,9 @@ describe('WalletService', () => {
         amount: 100,
         description: 'Test transfer',
       };
-      await expect(walletService.transferFunds(transferData)).rejects.toThrow(createError.BadRequest("Cannot transfer funds to yourself."));
+      await expect(walletService.transferFunds(transferData)).rejects.toThrow(
+        createError.BadRequest('Cannot transfer funds to yourself.'),
+      );
     });
   });
 });

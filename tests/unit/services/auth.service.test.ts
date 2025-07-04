@@ -11,7 +11,9 @@ let mockCreateSession: jest.Mock;
 beforeEach(() => {
   jest.clearAllMocks();
   mockCreateSession = jest.fn();
-  jest.spyOn(SessionService, 'getInstance').mockReturnValue({ createSession: mockCreateSession } as any);
+  jest
+    .spyOn(SessionService, 'getInstance')
+    .mockReturnValue({ createSession: mockCreateSession } as any);
 });
 
 describe('AuthService', () => {

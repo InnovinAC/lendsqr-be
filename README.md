@@ -221,13 +221,13 @@ db/migrations/      # Knex migration files
 ---
 
 ## ER Diagram
->  View the live version on [here](https://dbdiagram.io/d/6655f6bb14a3c53b1e9b63c9)
+
+> View the live version on [here](https://dbdiagram.io/d/6655f6bb14a3c53b1e9b63c9)
 
 ![ER Diagram](./er-diagram.png)
-
 
 ---
 
 ## License
 
-This project is licensed under the ISC License. 
+This project is licensed under the ISC License.

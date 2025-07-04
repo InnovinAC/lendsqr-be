@@ -15,22 +15,19 @@ export class SessionService extends Service {
   }
 
   async findActiveSession(id: number): Promise<Session | undefined> {
-    return this.db.table<Session>(TableName.SESSIONS)
+    return this.db
+      .table<Session>(TableName.SESSIONS)
       .where({ id, revoked: false })
       .andWhere('expires_at', '>', this.db.fn.now())
       .first();
   }
 
   async extendSession(id: number, newExpiresAt: Date): Promise<void> {
-    await this.db.table(TableName.SESSIONS)
-      .where({ id })
-      .update({ expires_at: newExpiresAt });
+    await this.db.table(TableName.SESSIONS).where({ id }).update({ expires_at: newExpiresAt });
   }
 
   async revokeSession(id: number): Promise<void> {
-    await this.db.table(TableName.SESSIONS)
-      .where({ id })
-      .update({ revoked: true });
+    await this.db.table(TableName.SESSIONS).where({ id }).update({ revoked: true });
   }
 }
 

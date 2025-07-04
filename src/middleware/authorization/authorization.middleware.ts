@@ -6,11 +6,11 @@ import SessionService from '@/services/session.service';
 import { JwtPayload } from 'jsonwebtoken';
 
 class AuthorizationMiddleware {
-    private sessionService: SessionService;
+  private sessionService: SessionService;
 
-    constructor() {
-        this.sessionService = SessionService.getInstance();
-    }
+  constructor() {
+    this.sessionService = SessionService.getInstance();
+  }
 
   public authorizeUser = async (req: Request, res: Response, next: NextFunction) => {
     const token = this.extractHeaders(req, next);
