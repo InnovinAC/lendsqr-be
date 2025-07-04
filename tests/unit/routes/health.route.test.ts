@@ -9,7 +9,7 @@ describe('HealthRoute', () => {
   beforeEach(() => {
     app = express();
     app.use(express.json());
-    
+
     healthRoute = new HealthRoute(app);
   });
 
@@ -23,11 +23,9 @@ describe('HealthRoute', () => {
     it('should respond to health check endpoint', async () => {
       healthRoute.initRoutes();
 
-      const response = await request(app)
-        .get('/health')
-        .expect(200);
+      const response = await request(app).get('/health').expect(200);
 
       expect(response.text).toBe('OK');
     });
   });
-}); 
+});

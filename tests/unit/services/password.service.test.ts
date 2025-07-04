@@ -65,8 +65,10 @@ describe('PasswordService', () => {
 
       mockedBcrypt.compare.mockRejectedValue(error as never);
 
-      await expect(PasswordService.comparePassword(password, hashedPassword)).rejects.toThrow('Comparison failed');
+      await expect(PasswordService.comparePassword(password, hashedPassword)).rejects.toThrow(
+        'Comparison failed',
+      );
       expect(mockedBcrypt.compare).toHaveBeenCalledWith(password, hashedPassword);
     });
   });
-}); 
+});

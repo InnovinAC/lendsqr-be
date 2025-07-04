@@ -13,10 +13,10 @@ describe('UserRoute', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     app = express();
     app.use(express.json());
-    
+
     userRoute = new UserRoute(app);
   });
 
@@ -24,12 +24,16 @@ describe('UserRoute', () => {
     it('should initialize user routes', () => {
       const mockProfileRouter = Router();
       const mockWalletRouter = Router();
-      
+
       const mockProfileController = { router: mockProfileRouter } as Partial<ProfileController>;
       const mockWalletController = { router: mockWalletRouter } as Partial<WalletController>;
 
-      (ProfileController as jest.Mock).mockImplementation(() => mockProfileController as ProfileController);
-      (WalletController as jest.Mock).mockImplementation(() => mockWalletController as WalletController);
+      (ProfileController as jest.Mock).mockImplementation(
+        () => mockProfileController as ProfileController,
+      );
+      (WalletController as jest.Mock).mockImplementation(
+        () => mockWalletController as WalletController,
+      );
 
       userRoute.initRoutes();
 
@@ -40,11 +44,11 @@ describe('UserRoute', () => {
     it('should mount profile and wallet routes at correct paths', async () => {
       const mockProfileRouter = Router();
       const mockWalletRouter = Router();
-      
+
       mockProfileRouter.get('/test', (_req, res) => {
         res.status(200).json({ profile: true });
       });
-      
+
       mockWalletRouter.get('/test', (_req, res) => {
         res.status(200).json({ wallet: true });
       });
@@ -52,8 +56,12 @@ describe('UserRoute', () => {
       const mockProfileController = { router: mockProfileRouter } as Partial<ProfileController>;
       const mockWalletController = { router: mockWalletRouter } as Partial<WalletController>;
 
-      (ProfileController as jest.Mock).mockImplementation(() => mockProfileController as ProfileController);
-      (WalletController as jest.Mock).mockImplementation(() => mockWalletController as WalletController);
+      (ProfileController as jest.Mock).mockImplementation(
+        () => mockProfileController as ProfileController,
+      );
+      (WalletController as jest.Mock).mockImplementation(
+        () => mockWalletController as WalletController,
+      );
 
       userRoute.initRoutes();
 
@@ -66,4 +74,4 @@ describe('UserRoute', () => {
       expect(walletResponse.body).toEqual({ wallet: true });
     });
   });
-}); 
+});

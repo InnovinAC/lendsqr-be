@@ -5,15 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "sh bin/test.sh && jest",
-    "start": "sh bin/init.sh && npm run build && npm run test && node dist/src/main",
+    "dev": "sh bin/init.sh && npm run build && npm run test && node dist/src/main",
+    "start": "npm run build && npm run test && node dist/src/main",
     "build": "tsc",
     "migrate": "knex migrate:latest",
     "migrate:make": "knex migrate:make",
     "seed": "knex seed:run",
-    "seed:make": "knex seed:make"
+    "seed:make": "knex seed:make",
+    "format": "prettier --write ."
   },
   "keywords": [],
-  "author": "",
+  "author": "Innovin Anuonye",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -26,6 +28,8 @@
     "knex": "^3.1.0",
     "module-alias": "^2.2.3",
     "mysql2": "^3.14.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "tsconfig-paths": "^4.2.0",
     "winston": "^3.17.0",
     "zod": "^3.25.67"
@@ -39,7 +43,10 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.7",
     "@types/supertest": "^6.0.3",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "jest": "^30.0.3",
+    "prettier": "^3.2.5",
     "supertest": "^7.1.1",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",

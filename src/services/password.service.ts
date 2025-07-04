@@ -1,17 +1,14 @@
-import * as bcrypt from "bcrypt";
+import * as bcrypt from 'bcrypt';
 class PasswordService {
-    private readonly saltRounds = 10;
+  private readonly saltRounds = 10;
 
-    async hashPassword(password: string): Promise<string> {
-        return bcrypt.hash(password, this.saltRounds);
-    }
+  async hashPassword(password: string): Promise<string> {
+    return bcrypt.hash(password, this.saltRounds);
+  }
 
-    async comparePassword(
-        plainTextPassword: string,
-        hashedPassword: string,
-    ): Promise<boolean> {
-        return bcrypt.compare(plainTextPassword, hashedPassword);
-    }
+  async comparePassword(plainTextPassword: string, hashedPassword: string): Promise<boolean> {
+    return bcrypt.compare(plainTextPassword, hashedPassword);
+  }
 }
 
 export default new PasswordService();

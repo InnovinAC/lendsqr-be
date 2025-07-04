@@ -67,15 +67,15 @@ describe('AuthController Integration', () => {
 
   it('should register successfully', async () => {
     const res = await request(app)
-        .post('/api/v1/auth/register')
-        .send({
-          email: 'test@example.com',
-          password: 'password123',
-          firstName: 'John',
-          lastName: 'Doe',
-          phoneNumber: '1234567890',
-        })
-        .expect(201);
+      .post('/api/v1/auth/register')
+      .send({
+        email: 'test@example.com',
+        password: 'password123',
+        firstName: 'John',
+        lastName: 'Doe',
+        phoneNumber: '1234567890',
+      })
+      .expect(201);
 
     expect(res.body.success).toBe(true);
     expect(res.body.message).toBe('Registration successful');
@@ -84,12 +84,12 @@ describe('AuthController Integration', () => {
 
   it('should login successfully', async () => {
     const res = await request(app)
-        .post('/api/v1/auth/login')
-        .send({
-          email: 'test@example.com',
-          password: 'password123',
-        })
-        .expect(200);
+      .post('/api/v1/auth/login')
+      .send({
+        email: 'test@example.com',
+        password: 'password123',
+      })
+      .expect(200);
 
     expect(res.body.success).toBe(true);
     expect(res.body.message).toBe('Login successful');

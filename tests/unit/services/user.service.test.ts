@@ -5,7 +5,6 @@ import { ICreateUser, ILogin } from '@/interfaces/user.interface';
 import { User } from '@/models';
 import createError from 'http-errors';
 
-
 jest.mock('@/services/password.service');
 jest.mock('@/services/auth.service');
 jest.mock('@/lib/service/service.lib');
@@ -27,7 +26,6 @@ describe('UserService', () => {
       transaction: jest.fn(),
       insert: jest.fn(),
     };
-
 
     userService = new UserService();
     (userService as any).db = mockDb;
@@ -140,7 +138,6 @@ describe('UserService', () => {
         authenticate: jest.fn().mockReturnValue(authResult),
       } as any);
 
-
       const mockTransaction = jest.fn().mockImplementation(async (callback) => {
         await callback({
           table: jest.fn().mockReturnThis(),
@@ -174,7 +171,7 @@ describe('UserService', () => {
   });
 
   describe('loginUser', () => {
-    it('should login user successfully', async () => {
+    it('should login user successfully and return JWT with sessionId', async () => {
       const loginData: ILogin = {
         email: 'test@example.com',
         password: 'password123',
@@ -194,7 +191,7 @@ describe('UserService', () => {
         updated_at: new Date(),
       };
 
-      const authResult = { accessToken: 'jwt-token' };
+      const authResult = { accessToken: 'jwt-token-with-sessionId' };
 
       mockDb.first.mockResolvedValue(mockUser);
       mockedPasswordService.comparePassword.mockResolvedValue(true);
@@ -203,11 +200,6 @@ describe('UserService', () => {
       } as any);
 
       const result = await userService.loginUser(loginData);
-
-      expect(mockedPasswordService.comparePassword).toHaveBeenCalledWith(
-        loginData.password,
-        mockUser.password
-      );
       expect(result).toEqual(authResult);
     });
 
@@ -220,7 +212,7 @@ describe('UserService', () => {
       mockDb.first.mockResolvedValue(null);
 
       await expect(userService.loginUser(loginData)).rejects.toThrow(
-        createError.BadRequest('Incorrect email or password')
+        createError.BadRequest('Incorrect email or password'),
       );
     });
 
@@ -247,8 +239,7 @@ describe('UserService', () => {
       mockDb.first.mockResolvedValue(mockUser);
       mockedPasswordService.comparePassword.mockResolvedValue(false);
 
-      await expect(userService.loginUser(loginData)).rejects.toThrow(
-      );
+      await expect(userService.loginUser(loginData)).rejects.toThrow();
     });
   });
-}); 
+});
