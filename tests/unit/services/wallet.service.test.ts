@@ -228,5 +228,15 @@ describe('WalletService', () => {
 
       await expect(walletService.transferFunds(transferData)).rejects.toThrow(createError.NotFound);
     });
+
+    it('should throw error when transferring to one self', async () => {
+      const transferData = {
+        user_id: 1,
+        recipient_user_id: 1,
+        amount: 100,
+        description: 'Test transfer',
+      };
+      await expect(walletService.transferFunds(transferData)).rejects.toThrow(createError.BadRequest("Cannot transfer funds to yourself."));
+    });
   });
 });

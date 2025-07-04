@@ -24,7 +24,6 @@ class UserService extends Service {
   }
 
   async createUser(data: ICreateUser) {
-    // const generatedId = await this.getUUID();
     data.password = await PasswordService.hashPassword(data.password);
     const id = await this.db.transaction(async (tx) => {
       const [userId] = await tx.table(TableName.USERS).insert(data);
