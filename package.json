@@ -6,7 +6,7 @@
   "scripts": {
     "test": "sh bin/test.sh && jest",
     "dev": "sh bin/init.sh && npm run build && npm run test && node dist/src/main",
-    "start": "npm run build && npm run test && node dist/src/main",
+    "start": "npm run build && node dist/src/main",
     "build": "tsc",
     "migrate": "knex migrate:latest",
     "migrate:make": "knex migrate:make",
