@@ -9,4 +9,4 @@
 7. Make use of transactions especially when updating user wallet - done
 8. Organize test files into test folder - done
 9. fix: user profile should not return sensitive data - done
-10. Add user sessions
+10. Add user sessions - done

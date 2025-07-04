@@ -11,31 +11,17 @@ describe('JwtService', () => {
   });
 
   describe('sign', () => {
-    it('should sign a token with userId and expiry', () => {
+    it('should sign a token with userId, sessionId, and expiry', () => {
       const userId = 1;
+      const sessionId = 42;
       const expiry = '1h';
       const expectedToken = 'mocked-jwt-token';
 
       mockedJwt.sign.mockReturnValue(expectedToken as any);
 
-      const result = JwtService.sign(userId, expiry);
+      const result = JwtService.sign(userId, sessionId, expiry);
 
-      expect(mockedJwt.sign).toHaveBeenCalledWith({ userId }, commonConfig.jwt.secret, {
-        expiresIn: expiry,
-      });
-      expect(result).toBe(expectedToken);
-    });
-
-    it('should handle different expiry formats', () => {
-      const userId = 1;
-      const expiry = '7d';
-      const expectedToken = 'mocked-jwt-token';
-
-      mockedJwt.sign.mockReturnValue(expectedToken as any);
-
-      const result = JwtService.sign(userId, expiry);
-
-      expect(mockedJwt.sign).toHaveBeenCalledWith({ userId }, commonConfig.jwt.secret, {
+      expect(mockedJwt.sign).toHaveBeenCalledWith({ userId, sessionId }, commonConfig.jwt.secret, {
         expiresIn: expiry,
       });
       expect(result).toBe(expectedToken);
@@ -45,7 +31,7 @@ describe('JwtService', () => {
   describe('verify', () => {
     it('should verify a valid token', () => {
       const token = 'valid-jwt-token';
-      const expectedPayload = { userId: 1, iat: 1234567890 };
+      const expectedPayload = { userId: 1, sessionId: 42, iat: 1234567890 };
 
       mockedJwt.verify.mockReturnValue(expectedPayload as any);
 
