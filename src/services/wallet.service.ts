@@ -23,7 +23,7 @@ class WalletService extends Service {
     // should have multiple wallets
     async findWalletByUser(user_id: number): Promise<Wallet> {
         return (this.db).table<Wallet>(TableName.WALLET)
-            .where({user_id})
+            .where('user_id', user_id)
             .first();
     }
 
@@ -78,6 +78,9 @@ class WalletService extends Service {
     async transferFunds(data: ITransferFunds): Promise<void> {
         const senderWallet = await this.findWalletByUser(data.user_id);
         const recipientWallet = await this.findWalletByUser(data.recipient_user_id);
+
+        if (!senderWallet) throw createError.NotFound("Sender wallet not found");
+        if (!recipientWallet) throw createError.NotFound("Recipient wallet not found");
 
         if (senderWallet.balance < data.amount) {
             throw createError.BadRequest("Wallet not found");
@@ -138,7 +141,7 @@ class WalletService extends Service {
             query.andWhere('type', type);
         }
 
-        return query.orderBy('created_at', 'desc');
+        return query.orderBy('created_at', 'desc').select();
     }
 
     private async addTransaction(data: Partial<Transaction>, transaction?: Knex.Transaction) {

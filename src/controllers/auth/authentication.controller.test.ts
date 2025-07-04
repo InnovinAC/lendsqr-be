@@ -138,5 +138,43 @@ describe('AuthenticationController (via AuthRoute)', () => {
 
       expect(response.status).toBe(400);
     });
+
+    it('should rate limit login requests', async () => {
+      const loginData = {
+        email: 'test@example.com',
+        password: 'wrong-password',
+      };
+      await request(app).post('/api/v1/auth/login').send(loginData)
+      await request(app).post('/api/v1/auth/login').send(loginData)
+      await request(app).post('/api/v1/auth/login').send(loginData)
+      await request(app).post('/api/v1/auth/login').send(loginData)
+      await request(app).post('/api/v1/auth/login').send(loginData)
+      await request(app).post('/api/v1/auth/login').send(loginData)
+      await request(app).post('/api/v1/auth/login').send(loginData)
+      await request(app).post('/api/v1/auth/login').send(loginData)
+      await request(app).post('/api/v1/auth/login').send(loginData)
+      await request(app).post('/api/v1/auth/login').send(loginData)
+      await request(app).post('/api/v1/auth/login').send(loginData).expect(429);
+
+    })
+
+    it('should rate limit register requests', async () => {
+      const loginData = {
+        email: 'test@example.com',
+        password: 'wrong-password',
+      };
+      await request(app).post('/api/v1/auth/register').send(loginData)
+      await request(app).post('/api/v1/auth/register').send(loginData)
+      await request(app).post('/api/v1/auth/register').send(loginData)
+      await request(app).post('/api/v1/auth/register').send(loginData)
+      await request(app).post('/api/v1/auth/register').send(loginData)
+      await request(app).post('/api/v1/auth/register').send(loginData)
+      await request(app).post('/api/v1/auth/register').send(loginData)
+      await request(app).post('/api/v1/auth/register').send(loginData)
+      await request(app).post('/api/v1/auth/register').send(loginData)
+      await request(app).post('/api/v1/auth/register').send(loginData)
+      await request(app).post('/api/v1/auth/register').send(loginData).expect(429);
+
+    })
   });
 });

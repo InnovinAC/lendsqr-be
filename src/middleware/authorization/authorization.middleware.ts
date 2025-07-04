@@ -12,7 +12,7 @@ class AuthorizationMiddleware {
         if (!decodedObj?.userId) {
             return next(createError.Unauthorized("Token expired"));
         }
-        const user = await UserService.getInstance().findUserById(decodedObj.userId);
+        const user = await new UserService().findUserById(decodedObj.userId);
 
         if (!user) {
             return next(createError.Unauthorized("Invalid User"));

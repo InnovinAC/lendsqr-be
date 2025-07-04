@@ -5,5 +5,5 @@ export interface Wallet extends Timestamp {
     user_id: number;
     balance: number;
     currency: string;
-    isActive: boolean;
+    is_active: boolean;
 }
