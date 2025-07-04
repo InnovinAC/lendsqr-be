@@ -138,6 +138,8 @@ JWT_SECRET=jwtsecret
 
 - Live, interactive API docs available at:  
   [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+- Check api health:  **GET**
+  [http://localhost:3000/api-docs](http://localhost:3000/api/v1/health)
 - Docs are generated from JSDoc annotations and OpenAPI schemas.
 - JWT Bearer authentication is supported in the docs UI.
 
